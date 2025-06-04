@@ -6,14 +6,14 @@ type CodeOutputProps = {
     componentName: string;
     propsInput: string;
     useTypescript: boolean;
-    useStatePerProp: boolean;
+    useStateInput?: string;
 };
 
 export default function CodeOutput({
     componentName,
     propsInput,
     useTypescript,
-    useStatePerProp,
+    useStateInput,
 }: CodeOutputProps) {
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const [copied, setCopied] = useState(false);
@@ -24,11 +24,16 @@ export default function CodeOutput({
             .map((p) => p.trim())
             .filter(Boolean);
 
+        const states = (useStateInput ?? "")
+            .split(",")
+            .map((p) => p.trim())
+            .filter(Boolean);
+
         const propsString = props.join(", ");
         const sampleJSX = "<div>Replace with your JSX</div>";
 
         const usesTS = useTypescript;
-        const usesState = useStatePerProp;
+        const usesState = useStateInput;
 
         const importLine = usesState
             ? [`import { useState } from 'react';`, " "]
@@ -45,14 +50,14 @@ export default function CodeOutput({
                 : [];
 
         const stateLines =
-            usesState && props.length > 0
+            usesState && states.length > 0
                 ? [
                       "",
-                      ...props.map(
+                      ...states.map(
                           (p) =>
                               `  const [${p}, set${
                                   p.charAt(0).toUpperCase() + p.slice(1)
-                              }] = useState<any>();`
+                              }] = useState${usesTS ? '<any>' : ''}();`
                       ),
                       " ",
                   ]
