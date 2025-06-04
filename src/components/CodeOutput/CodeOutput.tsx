@@ -3,12 +3,18 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 type CodeOutputProps = {
-    componentName: string,
-    propsInput: string,
-    useTypescript: boolean,
+    componentName: string;
+    propsInput: string;
+    useTypescript: boolean;
+    useStatePerProp: boolean;
 };
 
-export default function CodeOutput({componentName, propsInput, useTypescript}: CodeOutputProps) {
+export default function CodeOutput({
+    componentName,
+    propsInput,
+    useTypescript,
+    useStatePerProp,
+}: CodeOutputProps) {
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const [copied, setCopied] = useState(false);
 
@@ -17,11 +23,19 @@ export default function CodeOutput({componentName, propsInput, useTypescript}: C
             .split(",")
             .map((p) => p.trim())
             .filter(Boolean);
+
         const propsString = props.join(", ");
         const sampleJSX = "<div>Replace with your JSX</div>";
 
+        const usesTS = useTypescript;
+        const usesState = useStatePerProp;
+
+        const importLine = usesState
+            ? [`import { useState } from 'react';`, " "]
+            : [];
+
         const typeLines =
-            useTypescript && props.length > 0
+            usesTS && props.length > 0
                 ? [
                       `type ${componentName}Props = {`,
                       ...props.map((p) => `  ${p}: any;`),
@@ -30,22 +44,40 @@ export default function CodeOutput({componentName, propsInput, useTypescript}: C
                   ]
                 : [];
 
+        const stateLines =
+            usesState && props.length > 0
+                ? [
+                      "",
+                      ...props.map(
+                          (p) =>
+                              `  const [${p}, set${
+                                  p.charAt(0).toUpperCase() + p.slice(1)
+                              }] = useState<any>();`
+                      ),
+                      " ",
+                  ]
+                : [];
+
+        const functionSignature =
+            props.length > 0
+                ? usesTS
+                    ? `{ ${propsString} }: ${componentName}Props`
+                    : `{ ${propsString} }`
+                : " ";
+
         const componentLines = [
-            `export default function ${componentName}(${
-                props.length > 0
-                    ? useTypescript
-                        ? `{ ${propsString} }: ${componentName}Props`
-                        : `{ ${propsString} }`
-                    : ""
-            }) {`,
             "",
+            `export default function ${componentName}(${functionSignature}) {`,
+            ...stateLines,
             `  return (`,
             `    ${sampleJSX}`,
             `  );`,
             `}`,
         ];
 
-        return [...typeLines, ...componentLines].filter(Boolean).join("\n");
+        return [...importLine, ...typeLines, ...componentLines]
+            .filter(Boolean)
+            .join("\n");
     };
 
     const handleCopy = () => {
@@ -82,7 +114,7 @@ export default function CodeOutput({componentName, propsInput, useTypescript}: C
                 />
                 <button
                     onClick={handleCopy}
-                    className="absolute top-3 right-3 text-xs font-semibold px-3 py-1.5 rounded shadow-md"
+                    className="absolute top-3 right-1 text-xs font-semibold px-3 py-1.5 rounded shadow-md"
                 >
                     {copied ? "✅ Copied!" : "📋 Copy"}
                 </button>

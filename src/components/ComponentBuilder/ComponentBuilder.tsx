@@ -5,13 +5,36 @@ export default function ComponentBuilder() {
     const [componentName, setComponentName] = useState("MyComponent");
     const [propsInput, setPropsInput] = useState("title, onClick");
     const [useTypescript, setUseTypescript] = useState(true);
+    const [useStatePerProp, setUseStatePerProp] = useState(false);
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-100 to-slate-200 p-8">
-            <div className="max-w-5xl mx-auto bg-white rounded-2xl shadow-xl p-8 space-y-8">
+        <div style={{ minHeight: 'calc(100vh - 40px)' }} className="bg-gradient-to-br from-slate-100 to-slate-200 p-8">
+            <div className="max-w-5xl mx-auto bg-white rounded-2xl shadow-xl p-4 space-y-4">
                 <h1 className="text-3xl font-bold text-slate-800">
                     ⚛️ React Component Generator
                 </h1>
+                <p className="text-slate-600">
+                    Generate a React component with customizable props and
+                    TypeScript support.
+                </p>
+                <label className="flex items-center space-x-2 text-slate-700 font-medium">
+                    <input
+                        type="checkbox"
+                        checked={useTypescript}
+                        onChange={(e) => setUseTypescript(e.target.checked)}
+                        className="form-checkbox h-5 w-5 text-blue-600"
+                    />
+                    <span>Use TypeScript</span>
+                </label>
+                <label className="flex items-center space-x-2 text-slate-700 font-medium">
+                    <input
+                        type="checkbox"
+                        checked={useStatePerProp}
+                        onChange={(e) => setUseStatePerProp(e.target.checked)}
+                        className="form-checkbox h-5 w-5 text-blue-600"
+                    />
+                    <span>Create useState for each prop</span>
+                </label>
 
                 <div className="grid gap-6 sm:grid-cols-2">
                     <div className="space-y-2">
@@ -39,20 +62,11 @@ export default function ComponentBuilder() {
                     </div>
                 </div>
 
-                <label className="inline-flex items-center space-x-2 text-slate-700 font-medium">
-                    <input
-                        type="checkbox"
-                        checked={useTypescript}
-                        onChange={(e) => setUseTypescript(e.target.checked)}
-                        className="form-checkbox h-5 w-5 text-blue-600"
-                    />
-                    <span>Use TypeScript</span>
-                </label>
-
                 <CodeOutput
                     componentName={componentName}
                     propsInput={propsInput}
                     useTypescript={useTypescript}
+                    useStatePerProp={useStatePerProp}
                 />
             </div>
         </div>
