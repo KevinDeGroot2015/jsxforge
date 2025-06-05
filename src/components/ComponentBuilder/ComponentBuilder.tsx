@@ -3,7 +3,7 @@ import CodeOutput from "../CodeOutput/CodeOutput";
 
 export default function ComponentBuilder() {
     const [componentName, setComponentName] = useState("MyComponent");
-    const [propsInput, setPropsInput] = useState("title, onClick");
+    const [propsInput, setPropsInput] = useState("children");
     const [useStateInput, setUsestateInput] = useState("");
     const [useTypescript, setUseTypescript] = useState(true);
 

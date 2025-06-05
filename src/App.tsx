@@ -5,8 +5,8 @@ import "./index.css";
 export default function App() {
     return (
         <>
-        <ComponentBuilder />
-        <Footer />
+            <ComponentBuilder />
+            <Footer />
         </>
-);
+    );
 }

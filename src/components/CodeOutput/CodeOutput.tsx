@@ -57,7 +57,7 @@ export default function CodeOutput({
                           (p) =>
                               `  const [${p}, set${
                                   p.charAt(0).toUpperCase() + p.slice(1)
-                              }] = useState${usesTS ? '<any>' : ''}();`
+                              }] = useState${usesTS ? "<any>" : ""}();`
                       ),
                       " ",
                   ]
@@ -68,7 +68,7 @@ export default function CodeOutput({
                 ? usesTS
                     ? `{ ${propsString} }: ${componentName}Props`
                     : `{ ${propsString} }`
-                : " ";
+                : "";
 
         const componentLines = [
             "",
@@ -89,7 +89,7 @@ export default function CodeOutput({
         const textarea = textareaRef.current;
         if (textarea) {
             textarea.select();
-            document.execCommand("copy");
+            navigator.clipboard.writeText(textarea.value);
             setCopied(true);
             setTimeout(() => setCopied(false), 2000);
         }
