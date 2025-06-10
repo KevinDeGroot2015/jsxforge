@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 type CodeOutputProps = {
@@ -57,7 +57,7 @@ export default function CodeOutput({
                           (p) =>
                               `  const [${p}, set${
                                   p.charAt(0).toUpperCase() + p.slice(1)
-                              }] = useState${usesTS ? "<any>" : ""}();`
+                              }] = useState${usesTS ? '<any>' : ''}();`
                       ),
                       " ",
                   ]
@@ -104,6 +104,7 @@ export default function CodeOutput({
                 <SyntaxHighlighter
                     language="typescript"
                     style={oneDark}
+                    showLineNumbers
                     customStyle={{
                         padding: "1.5rem",
                         borderRadius: "0.75rem",

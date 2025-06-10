@@ -12,14 +12,7 @@ export default function ComponentBuilder() {
             style={{ minHeight: "calc(100vh - 40px)" }}
             className="bg-gradient-to-br from-slate-100 to-slate-200 p-8"
         >
-            <div className="max-w-5xl mx-auto bg-white rounded-2xl shadow-xl p-4 space-y-4">
-                <h1 className="text-3xl font-bold text-slate-800">
-                    ⚛️ React Component Generator
-                </h1>
-                <p className="text-slate-600">
-                    Generate a React component with customizable props and
-                    TypeScript support.
-                </p>
+            <div className="max-w-5xl mx-auto bg-white rounded-2xl shadow-xl p-4 space-y-4">                
                 <label className="flex items-center space-x-2 text-slate-700 font-medium">
                     <input
                         type="checkbox"
