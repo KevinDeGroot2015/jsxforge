@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
+import routes from "@router/routes";
 
 export default function Header() {
     const [isOpen, setIsOpen] = useState(false);
@@ -10,14 +11,17 @@ export default function Header() {
 
     return (
         <>
-            <header className="flex items-center justify-start p-4 bg-white shadow-md">
+            <header className="flex items-center justify-start space-x-2 p-4 bg-white shadow-md">
                 <button onClick={toggleMenu}>
                     <Menu className="w-6 h-6" />
                 </button>
                 <h1>
                     <Link to="/" className="font-bold text-slate-800!">
-                    ⚛️ Jsx Forge
+                        ⚛️ Jsx Forge
                     </Link>
+                    <p>
+                        React/Typescript components, templates and more
+                    </p>
                 </h1>
             </header>
 
@@ -45,27 +49,15 @@ export default function Header() {
                                 </button>
                             </div>
                             <nav className="flex flex-col gap-4">
-                                <a href="#home" className="hover:text-blue-600">
-                                    Home
-                                </a>
-                                <a
-                                    href="#about"
-                                    className="hover:text-blue-600"
-                                >
-                                    About
-                                </a>
-                                <a
-                                    href="#services"
-                                    className="hover:text-blue-600"
-                                >
-                                    Services
-                                </a>
-                                <a
-                                    href="#contact"
-                                    className="hover:text-blue-600"
-                                >
-                                    Contact
-                                </a>
+                                {routes.map(({ path, name }) => (
+                                    <Link
+                                        key={path}
+                                        to={path}
+                                        className="hover:text-blue-600"
+                                    >
+                                        {name}
+                                    </Link>
+                                ))}
                             </nav>
                         </motion.div>
                     </motion.div>

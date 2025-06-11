@@ -1,12 +1,12 @@
 import { Routes, Route } from "react-router";
-import routes from '../router/routes';
+import routes from "@router/routes";
 
 export default function Layout() {
     return (
         <>
             <div
-                style={{ minHeight: "calc(100vh - 40px)" }}
-                className="bg-gradient-to-br from-slate-100 to-slate-200 p-8"
+                style={{ minHeight: "calc(100vh - 130px)" }}
+                className="bg-gradient-to-br from-slate-100 to-slate-200 p-2 md:p-8"
             >
                 <div className="max-w-5xl mx-auto bg-white rounded-2xl shadow-xl p-4 space-y-4">
                     <Routes>

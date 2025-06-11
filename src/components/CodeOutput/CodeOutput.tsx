@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { PrismLight as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 type CodeOutputProps = {
@@ -15,7 +15,7 @@ export default function CodeOutput({
     propsInput,
     useTypescript,
     useStateInput,
-    customCode = "<div>Replace with your JSX</div>"
+    customCode = "<div>Replace with your JSX</div>",
 }: CodeOutputProps) {
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const [copied, setCopied] = useState(false);
@@ -58,7 +58,7 @@ export default function CodeOutput({
                           (p) =>
                               `  const [${p}, set${
                                   p.charAt(0).toUpperCase() + p.slice(1)
-                              }] = useState${usesTS ? '<any>' : ''}();`
+                              }] = useState${usesTS ? "<any>" : ""}();`
                       ),
                       " ",
                   ]
