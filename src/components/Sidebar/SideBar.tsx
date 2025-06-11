@@ -46,7 +46,7 @@ export default function Sidebar() {
                                 <div key={group} className="pb-2">
                                     <button
                                         onClick={() => toggleGroup(group)}
-                                        className="flex justify-between align-middle w-full font-medium"
+                                        className="flex justify-between items-center w-full font-medium"
                                     >
                                         {group}
                                         {openGroups.includes(group) ? (
