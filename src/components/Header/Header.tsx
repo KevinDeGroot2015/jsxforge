@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import { Link } from 'react-router-dom'
 
 export default function Header() {
     const [isOpen, setIsOpen] = useState(false);
@@ -13,8 +14,10 @@ export default function Header() {
                 <button onClick={toggleMenu}>
                     <Menu className="w-6 h-6" />
                 </button>
-                <h1 className="font-bold text-slate-800">
-                    ⚛️ React Component Generator
+                <h1>
+                    <Link to="/" className="font-bold text-slate-800!">
+                    ⚛️ Jsx Forge
+                    </Link>
                 </h1>
             </header>
 

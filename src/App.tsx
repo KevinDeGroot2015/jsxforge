@@ -1,14 +1,17 @@
-import ComponentBuilder from "./components/ComponentBuilder/ComponentBuilder";
 import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
+import Layout from "./layout/Layout";
 import "./index.css";
+import { BrowserRouter } from "react-router-dom";
 
 export default function App() {
     return (
         <>
-            <Header />
-            <ComponentBuilder />
-            <Footer />
+            <BrowserRouter>
+                <Header />
+                <Layout />
+                <Footer />
+            </BrowserRouter>
         </>
     );
 }

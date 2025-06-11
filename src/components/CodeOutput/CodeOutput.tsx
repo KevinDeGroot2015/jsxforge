@@ -7,6 +7,7 @@ type CodeOutputProps = {
     propsInput: string;
     useTypescript: boolean;
     useStateInput?: string;
+    customCode?: string;
 };
 
 export default function CodeOutput({
@@ -14,6 +15,7 @@ export default function CodeOutput({
     propsInput,
     useTypescript,
     useStateInput,
+    customCode = "<div>Replace with your JSX</div>"
 }: CodeOutputProps) {
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const [copied, setCopied] = useState(false);
@@ -30,7 +32,6 @@ export default function CodeOutput({
             .filter(Boolean);
 
         const propsString = props.join(", ");
-        const sampleJSX = "<div>Replace with your JSX</div>";
 
         const usesTS = useTypescript;
         const usesState = useStateInput;
@@ -75,7 +76,7 @@ export default function CodeOutput({
             `export default function ${componentName}(${functionSignature}) {`,
             ...stateLines,
             `  return (`,
-            `    ${sampleJSX}`,
+            `    ${customCode}`,
             `  );`,
             `}`,
         ];
