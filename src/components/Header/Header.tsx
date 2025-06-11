@@ -16,12 +16,10 @@ export default function Header() {
                     <Menu className="w-6 h-6" />
                 </button>
                 <h1>
-                    <Link to="/" className="font-bold text-slate-800!">
+                    <Link to="/" className="text-2xl font-bold text-slate-800!">
                         ⚛️ Jsx Forge
                     </Link>
-                    <p>
-                        React/Typescript components, templates and more
-                    </p>
+                    <p>React/Typescript components, templates and more</p>
                 </h1>
             </header>
 
@@ -49,13 +47,13 @@ export default function Header() {
                                 </button>
                             </div>
                             <nav className="flex flex-col gap-4">
-                                {routes.map(({ path, name }) => (
+                                {routes.map(({ path, title }) => (
                                     <Link
                                         key={path}
                                         to={path}
                                         className="hover:text-blue-600"
                                     >
-                                        {name}
+                                        {title}
                                     </Link>
                                 ))}
                             </nav>
