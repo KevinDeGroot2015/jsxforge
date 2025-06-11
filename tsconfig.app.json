@@ -29,6 +29,7 @@
       "@layout/*": ["layout/*"],
       "@pages/*": ["pages/*"],
       "@router/*": ["router/*"],
+      "@contexts/*": ["contexts/*"],
     }    
   },
   "include": ["src"]

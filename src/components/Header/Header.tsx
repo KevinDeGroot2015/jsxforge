@@ -1,14 +1,12 @@
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu } from "lucide-react";
 import { Link } from "react-router-dom";
-import routes from "@router/routes";
+import { useContext } from 'react';
+import SideBar from "@components/Sidebar/SideBar";
+import { SideBarContext } from "@contexts/SideBarContext";
 
 export default function Header() {
-    const [isOpen, setIsOpen] = useState(false);
-
-    const toggleMenu = () => setIsOpen(!isOpen);
-
+    const { toggleMenu } = useContext(SideBarContext);
+    
     return (
         <>
             <header className="flex items-center justify-start space-x-2 p-4 bg-white shadow-md">
@@ -22,45 +20,7 @@ export default function Header() {
                     <p>React/Typescript components, templates and more</p>
                 </h1>
             </header>
-
-            <AnimatePresence>
-                {isOpen && (
-                    <motion.div
-                        className="fixed inset-0 z-50 "
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        onClick={toggleMenu}
-                    >
-                        <motion.div
-                            className="bg-white w-64 h-full p-6"
-                            initial={{ x: "-100%" }}
-                            animate={{ x: 0 }}
-                            exit={{ x: "-100%" }}
-                            transition={{ type: "tween" }}
-                            onClick={(e) => e.stopPropagation()}
-                        >
-                            <div className="flex justify-between items-center mb-6">
-                                <h2 className="text-lg font-semibold">Menu</h2>
-                                <button onClick={toggleMenu}>
-                                    <X className="w-6 h-6" />
-                                </button>
-                            </div>
-                            <nav className="flex flex-col gap-4">
-                                {routes.map(({ path, title }) => (
-                                    <Link
-                                        key={path}
-                                        to={path}
-                                        className="hover:text-blue-600"
-                                    >
-                                        {title}
-                                    </Link>
-                                ))}
-                            </nav>
-                        </motion.div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
+            <SideBar />
         </>
     );
 }

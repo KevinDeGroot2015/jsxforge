@@ -1,19 +1,44 @@
 import Home from "@pages/Home";
 
-export type Routes = {
+export type RouteItem = {
     path: string;
     title: string;
     intro?: string;
     element: React.ReactElement;
 };
 
+export type RouteGroup = {
+    group: string;
+    description?: string;
+    items: RouteItem[];
+};
+
 export const routes = [
     {
-        path: "/",
-        title: "Basic component generator",
-        intro: "A simple component generator to create React components with TypeScript support.",
-        element: <Home />,
+        group: "General",
+        items: [
+            {
+                path: "/",
+                title: "Basic component generator",
+                intro: "A simple component generator to create React components with TypeScript support.",
+                element: <Home />,
+            },
+        ],
+    },
+    {
+        group: "Components",
+        items: [
+            { path: "/button", title: "Button" },
+            { path: "/card", title: "Card" },
+        ],
+    },
+    {
+        group: "Templates",
+        items: [
+            { path: "/dashboard", title: "Dashboard" },
+            { path: "/login", title: "Login" },
+        ],
     },
 ];
 
-export default routes as Routes[];
+export default routes as RouteGroup[];
