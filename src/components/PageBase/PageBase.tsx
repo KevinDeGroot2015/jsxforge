@@ -6,7 +6,8 @@ type PageBaseProps = {
     defaultComponentName: string;
     defaultPropsInput?: string;
     defaultUseStateInput?: string;
-    customCode?: string;
+    importCode?: string | string[];
+    bodyCode?: string | string[];
     returnCode?: string;
 }
 
@@ -14,7 +15,8 @@ export default function PageBase({
     defaultComponentName = "MyComponent",
     defaultPropsInput,
     defaultUseStateInput,
-    customCode,
+    importCode,
+    bodyCode,
     returnCode,
 }: PageBaseProps) {
     const [componentName, setComponentName] = useState(defaultComponentName);
@@ -66,7 +68,8 @@ export default function PageBase({
                 propsInput={propsInput}
                 useTypescript={useTypescript}
                 useStateInput={useStateInput}
-                customCode={customCode}
+                importCode={importCode}
+                bodyCode={bodyCode}
                 returnCode={returnCode}
             />
         </>

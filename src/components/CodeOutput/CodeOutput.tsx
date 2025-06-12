@@ -8,7 +8,8 @@ type CodeOutputProps = {
     propsInput?: string;
     useTypescript: boolean;
     useStateInput?: string;
-    customCode?: string;
+    importCode?: string | string[];
+    bodyCode?: string | string[];
     returnCode?: string;
 };
 
@@ -17,7 +18,8 @@ export default function CodeOutput({
     propsInput,
     useTypescript,
     useStateInput,
-    customCode,
+    importCode,
+    bodyCode,
     returnCode = "<h1>Hello world!</h1>;",
 }: CodeOutputProps) {
     const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -38,17 +40,21 @@ export default function CodeOutput({
         const usesTS = useTypescript;
         const usesState = useStateInput;
 
-        const importLine = usesState
-            ? [`import { useState } from 'react';`, " "]
-            : [];
+        const importLine = [
+            importCode,
+            usesState
+                ? `import { useState } from 'react';
+            `
+                : " ",
+        ];
 
         const typeLines =
             usesTS && props.length > 0
                 ? [
                       `type ${componentName}Props = {`,
                       ...props.map((p) => indentLine(`${p}: any;`, 1)),
-                      `};`,
-                      " ",
+                      `};
+                      `,
                   ]
                 : [];
 
@@ -71,16 +77,9 @@ export default function CodeOutput({
                               1
                           )
                       ),
-                      " ",
+                      "",
                   ]
                 : [];
-
-        const customCodeLines = [
-            ...((customCode ?? "")
-                .split("\n")
-                .map((line) => indentLine(line.trim(), 1)),
-            ""),
-        ];
 
         const returnLines = [
             indentLine("return (", 1),
@@ -91,7 +90,7 @@ export default function CodeOutput({
         const componentLines = [
             `export default function ${componentName}(${functionSignature}) {`,
             ...stateLines,
-            ...customCodeLines,
+            bodyCode,
             ...returnLines,
             `}`,
         ];
