@@ -1,13 +1,15 @@
 import { useState, useRef } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { indentLine } from "@utils/IndentLine";
 
 type CodeOutputProps = {
     componentName: string;
-    propsInput: string;
+    propsInput?: string;
     useTypescript: boolean;
     useStateInput?: string;
     customCode?: string;
+    returnCode?: string;
 };
 
 export default function CodeOutput({
@@ -15,13 +17,14 @@ export default function CodeOutput({
     propsInput,
     useTypescript,
     useStateInput,
-    customCode = "<div>Replace with your JSX</div>",
+    customCode,
+    returnCode = "<h1>Hello world!</h1>;",
 }: CodeOutputProps) {
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const [copied, setCopied] = useState(false);
 
     const generateComponentCode = (): string => {
-        const props = propsInput
+        const props = (propsInput ?? "")
             .split(",")
             .map((p) => p.trim())
             .filter(Boolean);
@@ -32,7 +35,6 @@ export default function CodeOutput({
             .filter(Boolean);
 
         const propsString = props.join(", ");
-
         const usesTS = useTypescript;
         const usesState = useStateInput;
 
@@ -44,22 +46,8 @@ export default function CodeOutput({
             usesTS && props.length > 0
                 ? [
                       `type ${componentName}Props = {`,
-                      ...props.map((p) => `  ${p}: any;`),
+                      ...props.map((p) => indentLine(`${p}: any;`, 1)),
                       `};`,
-                      " ",
-                  ]
-                : [];
-
-        const stateLines =
-            usesState && states.length > 0
-                ? [
-                      "",
-                      ...states.map(
-                          (p) =>
-                              `  const [${p}, set${
-                                  p.charAt(0).toUpperCase() + p.slice(1)
-                              }] = useState${usesTS ? "<any>" : ""}();`
-                      ),
                       " ",
                   ]
                 : [];
@@ -71,13 +59,40 @@ export default function CodeOutput({
                     : `{ ${propsString} }`
                 : "";
 
+        const stateLines =
+            usesState && states.length > 0
+                ? [
+                      "",
+                      ...states.map((p) =>
+                          indentLine(
+                              `const [${p}, set${
+                                  p.charAt(0).toUpperCase() + p.slice(1)
+                              }] = useState${usesTS ? "<any>" : ""}();`,
+                              1
+                          )
+                      ),
+                      " ",
+                  ]
+                : [];
+
+        const customCodeLines = [
+            ...((customCode ?? "")
+                .split("\n")
+                .map((line) => indentLine(line.trim(), 1)),
+            ""),
+        ];
+
+        const returnLines = [
+            indentLine("return (", 1),
+            indentLine(returnCode.trim(), 2),
+            indentLine(");", 1),
+        ];
+
         const componentLines = [
-            "",
             `export default function ${componentName}(${functionSignature}) {`,
             ...stateLines,
-            `  return (`,
-            `    ${customCode}`,
-            `  );`,
+            ...customCodeLines,
+            ...returnLines,
             `}`,
         ];
 

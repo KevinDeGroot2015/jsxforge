@@ -2,25 +2,25 @@ import { useState } from "react";
 import CodeOutput from "@components/CodeOutput/CodeOutput";
 import FormField from "@components/FormField/FormField";
 
-interface PageBaseProps {
-    defaultComponentName?: string;
+type PageBaseProps = {
+    defaultComponentName: string;
     defaultPropsInput?: string;
     defaultUseStateInput?: string;
-    defaultUseTypescript?: boolean;
     customCode?: string;
+    returnCode?: string;
 }
 
 export default function PageBase({
     defaultComponentName = "MyComponent",
-    defaultPropsInput = "children",
-    defaultUseStateInput = "",
-    defaultUseTypescript = true,
+    defaultPropsInput,
+    defaultUseStateInput,
     customCode,
+    returnCode,
 }: PageBaseProps) {
     const [componentName, setComponentName] = useState(defaultComponentName);
     const [propsInput, setPropsInput] = useState(defaultPropsInput);
     const [useStateInput, setUsestateInput] = useState(defaultUseStateInput);
-    const [useTypescript, setUseTypescript] = useState(defaultUseTypescript);
+    const [useTypescript, setUseTypescript] = useState(true);
 
     const fields = [
         {
@@ -31,13 +31,13 @@ export default function PageBase({
         },
         {
             label: "Props (comma-separated):",
-            value: propsInput,
+            value: propsInput ?? "",
             onChange: setPropsInput,
             placeholder: "e.g. title, onClick",
         },
         {
             label: "useState (comma-separated):",
-            value: useStateInput,
+            value: useStateInput ?? "",
             onChange: setUsestateInput,
             placeholder: "e.g. count, name",
         },
@@ -67,6 +67,7 @@ export default function PageBase({
                 useTypescript={useTypescript}
                 useStateInput={useStateInput}
                 customCode={customCode}
+                returnCode={returnCode}
             />
         </>
     );

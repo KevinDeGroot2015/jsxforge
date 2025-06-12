@@ -1,3 +1,4 @@
+import Button from "@pages/components/Button";
 import BasicComponentgenerator from "@pages/general/BasicComponentGenerator";
 
 export type RouteItem = {
@@ -28,7 +29,7 @@ export const routes = [
     {
         group: "Components",
         items: [
-            { path: "/button", title: "Button" },
+            { path: "/button", title: "Button", element: <Button /> },
             { path: "/card", title: "Card" },
         ],
     },
