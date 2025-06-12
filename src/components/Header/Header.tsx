@@ -17,7 +17,7 @@ export default function Header() {
                     <Link to="/" className="text-2xl font-bold text-slate-800!">
                         ⚛️ Jsx Forge
                     </Link>
-                    <p>React/Typescript components, templates and more</p>
+                    <p className="text-slate-400">React/Typescript components, templates and more</p>
                 </h1>
             </header>
             <SideBar />

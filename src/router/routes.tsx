@@ -1,4 +1,4 @@
-import Home from "@pages/Home";
+import BasicComponentgenerator from "@pages/general/BasicComponentGenerator";
 
 export type RouteItem = {
     path: string;
@@ -21,7 +21,7 @@ export const routes = [
                 path: "/",
                 title: "Basic component generator",
                 intro: "A simple component generator to create React components with TypeScript support.",
-                element: <Home />,
+                element: <BasicComponentgenerator />,
             },
         ],
     },

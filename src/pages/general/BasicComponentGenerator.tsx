@@ -1,7 +1,7 @@
 import { useState } from "react";
 import CodeOutput from "@components/CodeOutput/CodeOutput";
 
-export default function ComponentBuilder() {
+export default function BasicComponentgenerator() {
     const [componentName, setComponentName] = useState("MyComponent");
     const [propsInput, setPropsInput] = useState("children");
     const [useStateInput, setUsestateInput] = useState("");
