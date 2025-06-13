@@ -78,7 +78,6 @@ export default function Sidebar() {
                                                         <Link
                                                             key={path}
                                                             to={path}
-                                                            onClick={toggleMenu}
                                                         >
                                                             {title}
                                                         </Link>

@@ -9,6 +9,7 @@ type PageBaseProps = {
     importCode?: string | string[];
     bodyCode?: string | string[];
     returnCode?: string;
+    codeLanguage?: string;
 }
 
 export default function PageBase({
@@ -18,6 +19,7 @@ export default function PageBase({
     importCode,
     bodyCode,
     returnCode,
+    codeLanguage,
 }: PageBaseProps) {
     const [componentName, setComponentName] = useState(defaultComponentName);
     const [propsInput, setPropsInput] = useState(defaultPropsInput);
@@ -71,6 +73,7 @@ export default function PageBase({
                 importCode={importCode}
                 bodyCode={bodyCode}
                 returnCode={returnCode}
+                codeLanguage={codeLanguage}
             />
         </>
     );

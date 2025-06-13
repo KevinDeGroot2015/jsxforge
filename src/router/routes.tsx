@@ -1,5 +1,8 @@
+import Alert from "@pages/components/Alert";
 import Button from "@pages/components/Button";
+import Card from "@pages/components/Card";
 import FormField from "@pages/components/FormField";
+import Modal from "@pages/components/Modal";
 import BasicComponentgenerator from "@pages/general/BasicComponentGenerator";
 
 export type RouteItem = {
@@ -30,8 +33,11 @@ export const routes = [
     {
         group: "Components",
         items: [
+            { path: "/alert", title: "Alert", element: <Alert /> },
             { path: "/button", title: "Button", element: <Button /> },
             { path: "/formfield", title: "Form field", element: <FormField /> },
+            { path: "/modal", title: "Modal", element: <Modal /> },
+            { path: "/card", title: "Card", element: <Card /> },
         ],
     },
     {

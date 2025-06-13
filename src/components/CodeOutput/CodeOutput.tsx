@@ -11,6 +11,7 @@ type CodeOutputProps = {
     importCode?: string | string[];
     bodyCode?: string | string[];
     returnCode?: string;
+    codeLanguage?: string;
 };
 
 export default function CodeOutput({
@@ -21,6 +22,7 @@ export default function CodeOutput({
     importCode,
     bodyCode,
     returnCode = "<h1>Hello world!</h1>;",
+    codeLanguage = "tsx",
 }: CodeOutputProps) {
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const [copied, setCopied] = useState(false);
@@ -111,9 +113,9 @@ export default function CodeOutput({
     };
 
     return (
-        <div className="relative rounded-xl overflow-hidden shadow">
+        <div className="relative rounded-xl overflow-hidden shadow mb-5">
             <SyntaxHighlighter
-                language="typescript"
+                language={codeLanguage}
                 style={oneDark}
                 showLineNumbers
                 customStyle={{
