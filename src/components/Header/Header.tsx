@@ -15,7 +15,7 @@ export default function Header() {
                 </button>
                 <h1>
                     <Link to="/" className="text-2xl font-bold text-slate-800!">
-                        ⚛️ Jsx Forge
+                        Jsx Forge
                     </Link>
                     <p className="text-slate-400">React/Typescript components, templates and more</p>
                 </h1>

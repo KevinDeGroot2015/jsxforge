@@ -45,7 +45,7 @@ export default function CodeOutput({
             usesState
                 ? `import { useState } from 'react';
             `
-                : " ",
+                : "",
         ];
 
         const typeLines =
@@ -111,35 +111,30 @@ export default function CodeOutput({
     };
 
     return (
-        <div className="space-y-4">
-            <h2 className="text-2xl font-semibold text-slate-800">
-                🧩 Generated Component
-            </h2>
-            <div className="relative rounded-xl overflow-hidden shadow">
-                <SyntaxHighlighter
-                    language="typescript"
-                    style={oneDark}
-                    showLineNumbers
-                    customStyle={{
-                        padding: "1.5rem",
-                        borderRadius: "0.75rem",
-                    }}
-                >
-                    {generateComponentCode()}
-                </SyntaxHighlighter>
-                <textarea
-                    ref={textareaRef}
-                    className="absolute -left-[9999px] top-0 w-px h-px opacity-0 pointer-events-none"
-                    value={generateComponentCode()}
-                    readOnly
-                />
-                <button
-                    onClick={handleCopy}
-                    className="absolute top-3 right-1 text-xs font-semibold px-3 py-1.5 rounded shadow-md"
-                >
-                    {copied ? "✅ Copied!" : "📋 Copy"}
-                </button>
-            </div>
+        <div className="relative rounded-xl overflow-hidden shadow">
+            <SyntaxHighlighter
+                language="typescript"
+                style={oneDark}
+                showLineNumbers
+                customStyle={{
+                    padding: "1.5rem",
+                    borderRadius: "0.75rem",
+                }}
+            >
+                {generateComponentCode()}
+            </SyntaxHighlighter>
+            <textarea
+                ref={textareaRef}
+                className="absolute -left-[9999px] top-0 w-px h-px opacity-0 pointer-events-none"
+                value={generateComponentCode()}
+                readOnly
+            />
+            <button
+                onClick={handleCopy}
+                className="absolute top-3 right-1 text-xs font-semibold px-3 py-1.5 rounded shadow-md"
+            >
+                {copied ? "✅ Copied!" : "📋 Copy"}
+            </button>
         </div>
     );
 }

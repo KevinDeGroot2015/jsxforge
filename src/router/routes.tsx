@@ -1,4 +1,5 @@
 import Button from "@pages/components/Button";
+import FormField from "@pages/components/FormField";
 import BasicComponentgenerator from "@pages/general/BasicComponentGenerator";
 
 export type RouteItem = {
@@ -30,7 +31,7 @@ export const routes = [
         group: "Components",
         items: [
             { path: "/button", title: "Button", element: <Button /> },
-            { path: "/card", title: "Card" },
+            { path: "/formfield", title: "Form field", element: <FormField /> },
         ],
     },
     {
