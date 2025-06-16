@@ -40,13 +40,13 @@ export const routes = [
             { path: "/card", title: "Card", element: <Card /> },
         ],
     },
-    {
-        group: "Templates",
-        items: [
-            { path: "/dashboard", title: "Dashboard" },
-            { path: "/login", title: "Login" },
-        ],
-    },
+    // {
+    //     group: "Templates",
+    //     items: [
+    //         { path: "/dashboard", title: "Dashboard" },
+    //         { path: "/login", title: "Login" },
+    //     ],
+    // },
 ];
 
 export default routes as RouteGroup[];

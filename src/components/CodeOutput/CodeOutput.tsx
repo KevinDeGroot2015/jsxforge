@@ -4,7 +4,7 @@ import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { indentLine } from "@utils/IndentLine";
 
 type CodeOutputProps = {
-    componentName: string;
+    componentName?: string;
     propsInput?: string;
     useTypescript: boolean;
     useStateInput?: string;
