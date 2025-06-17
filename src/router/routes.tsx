@@ -3,6 +3,7 @@ import Button from "@pages/components/Button";
 import Card from "@pages/components/Card";
 import FormField from "@pages/components/FormField";
 import Modal from "@pages/components/Modal";
+import ApiFetch from "@pages/functions/ApiFetch";
 import BasicComponentgenerator from "@pages/general/BasicComponentGenerator";
 
 export type RouteItem = {
@@ -38,6 +39,12 @@ export const routes = [
             { path: "/formfield", title: "Form field", element: <FormField /> },
             { path: "/modal", title: "Modal", element: <Modal /> },
             { path: "/card", title: "Card", element: <Card /> },
+        ],
+    },
+    {
+        group: "Functions",
+        items: [
+            { path: "/api-fetch", title: "Api Fetch methods", intro: "Multiple variations when using a rest-API", element: <ApiFetch /> },
         ],
     },
     // {

@@ -5,6 +5,7 @@ export default function BasicComponentgenerator() {
         <PageBase
             defaultComponentName="MyComponent"
             defaultPropsInput="children"
+            returnCode="<h1>Hello, World!</h1>"
         />
     );
 }

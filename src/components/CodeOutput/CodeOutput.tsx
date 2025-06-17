@@ -8,7 +8,7 @@ type CodeOutputProps = {
     propsInput?: string;
     useTypescript: boolean;
     useStateInput?: string;
-    importCode?: string | string[];
+    headerCode?: string | string[];
     bodyCode?: string | string[];
     returnCode?: string;
     codeLanguage?: string;
@@ -19,9 +19,9 @@ export default function CodeOutput({
     propsInput,
     useTypescript,
     useStateInput,
-    importCode,
+    headerCode,
     bodyCode,
-    returnCode = "<h1>Hello world!</h1>;",
+    returnCode,
     codeLanguage = "tsx",
 }: CodeOutputProps) {
     const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -43,7 +43,7 @@ export default function CodeOutput({
         const usesState = useStateInput;
 
         const importLine = [
-            importCode,
+            headerCode,
             usesState
                 ? `import { useState } from 'react';
             `
@@ -85,17 +85,19 @@ export default function CodeOutput({
 
         const returnLines = [
             indentLine("return (", 1),
-            indentLine(returnCode.trim(), 2),
+            indentLine((returnCode ?? "").trim(), 2),
             indentLine(");", 1),
         ];
 
-        const componentLines = [
-            `export default function ${componentName}(${functionSignature}) {`,
-            ...stateLines,
-            bodyCode,
-            ...returnLines,
-            `}`,
-        ];
+        const componentLines = returnCode?.trim()
+            ? [
+                  `export default function ${componentName}(${functionSignature}) {`,
+                  ...stateLines,
+                  bodyCode,
+                  ...returnLines,
+                  `}`,
+              ]
+            : [];
 
         return [...importLine, ...typeLines, ...componentLines]
             .filter(Boolean)
