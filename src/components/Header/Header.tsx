@@ -10,15 +10,16 @@ export default function Header() {
     return (
         <>
             <header className="flex items-center justify-start space-x-2 p-4 bg-white shadow-md">
-                <button onClick={toggleMenu}>
-                    <Menu className="w-6 h-6" />
+                <button onClick={toggleMenu} className="flex items-center justify-center">
+                    <Menu className="w-6 h-6 pr-2" />
+                    <div>Menu</div>
                 </button>
-                <h1>
+                <div>
                     <Link to="/" className="text-2xl font-bold text-slate-800!">
-                        Jsx Forge
+                        JSXForge – Free React Component Generator
                     </Link>
                     <p className="text-slate-400">React/Typescript components, templates and more</p>
-                </h1>
+                </div>
             </header>
             <SideBar />
         </>

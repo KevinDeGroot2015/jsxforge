@@ -1,7 +1,5 @@
-import { useState, useRef } from "react";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { indentLine } from "@utils/IndentLine";
+import CodeVisualizator from "@components/CodeVisualizator/CodeVisualizator";
 
 type CodeOutputProps = {
     componentName?: string;
@@ -22,11 +20,7 @@ export default function CodeOutput({
     headerCode,
     bodyCode,
     returnCode,
-    codeLanguage = "tsx",
 }: CodeOutputProps) {
-    const textareaRef = useRef<HTMLTextAreaElement>(null);
-    const [copied, setCopied] = useState(false);
-
     const generateComponentCode = (): string => {
         const props = (propsInput ?? "")
             .split(",")
@@ -104,41 +98,35 @@ export default function CodeOutput({
             .join("\n");
     };
 
-    const handleCopy = () => {
-        const textarea = textareaRef.current;
-        if (textarea) {
-            textarea.select();
-            navigator.clipboard.writeText(textarea.value);
-            setCopied(true);
-            setTimeout(() => setCopied(false), 2000);
-        }
+    const generateJSXPreview = (): string => {
+        if (!componentName) return "";
+
+        const props = (propsInput ?? "")
+            .split(",")
+            .map((p) => p.trim())
+            .filter(Boolean);
+
+        const propEntries = props.map((prop) => {
+            if (prop.startsWith("on")) {
+                return `${prop}={() => {}}`;
+            }
+            return `${prop}="..."`;
+        });
+
+        return `<${componentName} ${propEntries.join(" ")} />`;
     };
 
     return (
-        <div className="relative rounded-xl overflow-hidden shadow mb-5">
-            <SyntaxHighlighter
-                language={codeLanguage}
-                style={oneDark}
-                showLineNumbers
-                customStyle={{
-                    padding: "1.5rem",
-                    borderRadius: "0.75rem",
-                }}
-            >
-                {generateComponentCode()}
-            </SyntaxHighlighter>
-            <textarea
-                ref={textareaRef}
-                className="absolute -left-[9999px] top-0 w-px h-px opacity-0 pointer-events-none"
-                value={generateComponentCode()}
-                readOnly
-            />
-            <button
-                onClick={handleCopy}
-                className="absolute top-3 right-1 text-xs font-semibold px-3 py-1.5 rounded shadow-md"
-            >
-                {copied ? "✅ Copied!" : "📋 Copy"}
-            </button>
-        </div>
+        <>
+            <div className="relative rounded-xl overflow-hidden shadow mb-5">
+                <CodeVisualizator codeFunction={generateComponentCode} />
+            </div>
+            <div className="relative rounded-xl overflow-hidden shadow mb-5 mt-8">
+                <CodeVisualizator
+                    title="Component"
+                    codeFunction={generateJSXPreview}
+                />
+            </div>
+        </>
     );
 }

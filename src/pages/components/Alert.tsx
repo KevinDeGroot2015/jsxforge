@@ -6,8 +6,8 @@ export default function Alert() {
             className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative"
             role="alert"
         >
-            <strong className="font-bold">Title</strong>
-            <span className="block sm:inline">Body</span>
+            <strong className="font-bold">{title}</strong>
+            <span className="block sm:inline">{body}</span>
             <span
                 onClick={() => setVisible(false)}
                 className="absolute top-0 bottom-0 right-0 px-4 py-3 cursor-pointer text-xl"
@@ -24,7 +24,7 @@ export default function Alert() {
     return (
         <PageBase
             defaultComponentName="Alert"
-            defaultPropsInput="setVisible"
+            defaultPropsInput="title, body, setVisible"
             defaultUseStateInput="visible"
             bodyCode={bodyCode}
             returnCode={returnCode}

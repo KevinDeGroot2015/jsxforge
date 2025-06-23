@@ -30,6 +30,7 @@ useEffect(() => {
 import React, { useState } from 'react';
 
 const [errorMessage, setErrorMessage] = useState<string | null>(null);
+const [data, setData] = useState<string | null>(null);
 
 const patchApi = async () => {
     try {
@@ -38,7 +39,7 @@ const patchApi = async () => {
             headers: {
                 'Content-Type': 'application/merge-patch+json'
             },
-            body: JSON.stringify({ hexColor: color }),
+            body: JSON.stringify({ data }),
         });
 
         const respData = await result.json();

@@ -4,13 +4,11 @@ import Header from "@components/Header/Header";
 import Layout from "@layout/Layout";
 import "@assets/styles/index.css";
 import { SideBarProvider } from "@contexts/SideBarContext";
-import WelcomeMessage from "@components/WelcomeMessage/Welcomemessage";
 
 export default function App() {
     return (
         <>
-            <BrowserRouter>
-                <WelcomeMessage />
+            <BrowserRouter>            
                 <SideBarProvider>
                     <Header />
                 </SideBarProvider>
