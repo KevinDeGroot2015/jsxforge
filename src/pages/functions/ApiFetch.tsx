@@ -113,13 +113,14 @@ import React, { useState } from 'react';
 `;
     return (
         <>
-            <PageBase headerCode={returnCodeStaticApi} />
-            <PageBase headerCode={returnCodeStaticApiPatch} />
+            <PageBase headerCode={returnCodeStaticApi} showAssets={false}/>
+            <PageBase headerCode={returnCodeStaticApiPatch} showAssets={false}/>
             <PageBase
                 defaultComponentName="FormSubmit"
                 headerCode={returnCodeStaticApiPostHead}
                 bodyCode={returnCodeStaticApiPostBody}
                 returnCode={returnCodeStaticApiPostReturn}
+                showAssets={false}
             />
         </>
     );

@@ -1,4 +1,5 @@
 import { indentLine } from "@utils/IndentLine";
+import { parseCommaList, inferPropType } from "@utils/codeOutputUtils";
 import CodeVisualizator from "@components/CodeVisualizator/CodeVisualizator";
 
 type CodeOutputProps = {
@@ -10,6 +11,7 @@ type CodeOutputProps = {
     bodyCode?: string | string[];
     returnCode?: string;
     codeLanguage?: string;
+    showAssets?: boolean;
 };
 
 export default function CodeOutput({
@@ -20,37 +22,30 @@ export default function CodeOutput({
     headerCode,
     bodyCode,
     returnCode,
+    showAssets,
 }: CodeOutputProps) {
     const generateComponentCode = (): string => {
-        const props = (propsInput ?? "")
-            .split(",")
-            .map((p) => p.trim())
-            .filter(Boolean);
-
-        const states = (useStateInput ?? "")
-            .split(",")
-            .map((p) => p.trim())
-            .filter(Boolean);
+        const props = parseCommaList(propsInput);
+        const states = parseCommaList(useStateInput);
+        const usesTS = useTypescript;
 
         const propsString = props.join(", ");
-        const usesTS = useTypescript;
-        const usesState = useStateInput;
+        const usesState = states.length > 0;
 
         const importLine = [
-            headerCode,
-            usesState
-                ? `import { useState } from 'react';
-            `
-                : "",
+            ...(Array.isArray(headerCode) ? headerCode : [headerCode ?? ""]),
+            usesState ? [`import { useState } from 'react';`] : "",
+            " ",
         ];
 
         const typeLines =
             usesTS && props.length > 0
                 ? [
                       `type ${componentName}Props = {`,
-                      ...props.map((p) => indentLine(`${p}: any;`, 1)),
-                      `};
-                      `,
+                      ...props.map((prop) =>
+                          indentLine(`${prop}: ${inferPropType(prop)};`, 1)
+                      ),
+                      `};\n`,
                   ]
                 : [];
 
@@ -61,21 +56,20 @@ export default function CodeOutput({
                     : `{ ${propsString} }`
                 : "";
 
-        const stateLines =
-            usesState && states.length > 0
-                ? [
-                      "",
-                      ...states.map((p) =>
-                          indentLine(
-                              `const [${p}, set${
-                                  p.charAt(0).toUpperCase() + p.slice(1)
-                              }] = useState${usesTS ? "<any>" : ""}();`,
-                              1
-                          )
-                      ),
-                      "",
-                  ]
-                : [];
+        const stateLines = usesState
+            ? [
+                  "",
+                  ...states.map((state) =>
+                      indentLine(
+                          `const [${state}, set${capitalize(
+                              state
+                          )}] = useState${usesTS ? "<any>" : ""}();`,
+                          1
+                      )
+                  ),
+                  "",
+              ]
+            : [];
 
         const returnLines = [
             indentLine("return (", 1),
@@ -87,7 +81,7 @@ export default function CodeOutput({
             ? [
                   `export default function ${componentName}(${functionSignature}) {`,
                   ...stateLines,
-                  bodyCode,
+                  ...(Array.isArray(bodyCode) ? bodyCode : [bodyCode ?? ""]),
                   ...returnLines,
                   `}`,
               ]
@@ -100,33 +94,28 @@ export default function CodeOutput({
 
     const generateJSXPreview = (): string => {
         if (!componentName) return "";
+        const props = parseCommaList(propsInput);
 
-        const props = (propsInput ?? "")
-            .split(",")
-            .map((p) => p.trim())
-            .filter(Boolean);
-
-        const propEntries = props.map((prop) => {
-            if (prop.startsWith("on")) {
-                return `${prop}={() => {}}`;
-            }
-            return `${prop}="..."`;
-        });
+        const propEntries = props.map((prop) =>
+            prop.startsWith("on") ? `${prop}={() => {}}` : `${prop}={${prop}}`
+        );
 
         return `<${componentName} ${propEntries.join(" ")} />`;
     };
 
     return (
         <>
-            <div className="relative rounded-xl overflow-hidden shadow mb-5">
-                <CodeVisualizator codeFunction={generateComponentCode} />
-            </div>
-            <div className="relative rounded-xl overflow-hidden shadow mb-5 mt-8">
+            <CodeVisualizator codeFunction={generateComponentCode} />
+            {showAssets && (
                 <CodeVisualizator
                     title="Component"
                     codeFunction={generateJSXPreview}
                 />
-            </div>
+            )}
         </>
     );
+}
+
+function capitalize(str: string): string {
+    return str.charAt(0).toUpperCase() + str.slice(1);
 }

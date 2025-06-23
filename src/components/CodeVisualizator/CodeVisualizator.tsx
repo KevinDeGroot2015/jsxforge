@@ -25,23 +25,25 @@ export default function CodeBlock({ codeFunction, title }: CodeBlockProps) {
     return (
         <>
             {title && <h2 className="font-bold pt-4">{title}</h2>}
-            <SyntaxHighlighter
-                language="tsx"
-                style={oneDark}
-                showLineNumbers={true}
-                customStyle={{
-                    padding: "1.5rem",
-                    borderRadius: "0.75rem",
-                }}
-            >
-                {codeFunction()}
-            </SyntaxHighlighter>
-            <button
-                onClick={handleCopy}
-                className="absolute top-3 right-1 text-xs font-semibold px-3 py-1.5 rounded shadow-md border border-solid"
-            >
-                {copied ? "✅ Copied!" : "📋 Copy"}
-            </button>
+            <div className="relative">
+                <SyntaxHighlighter
+                    language="tsx"
+                    style={oneDark}
+                    showLineNumbers={true}
+                    customStyle={{
+                        padding: "1.5rem",
+                        borderRadius: "0.75rem",
+                    }}
+                >
+                    {codeFunction()}
+                </SyntaxHighlighter>
+                <button
+                    onClick={handleCopy}
+                    className="absolute top-1 right-1 text-xs font-semibold px-3 py-1.5 rounded shadow-md border border-solid"
+                >
+                    {copied ? "✅ Copied!" : "📋 Copy"}
+                </button>
+            </div>
             <textarea
                 ref={textareaRef}
                 className="absolute -left-[9999px] top-0 w-px h-px opacity-0 pointer-events-none"

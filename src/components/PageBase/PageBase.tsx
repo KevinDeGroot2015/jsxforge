@@ -10,6 +10,7 @@ type PageBaseProps = {
     bodyCode?: string | string[];
     returnCode?: string;
     codeLanguage?: string;
+    showAssets?: boolean;
 };
 
 export default function PageBase({
@@ -20,6 +21,7 @@ export default function PageBase({
     bodyCode,
     returnCode,
     codeLanguage,
+    showAssets = true,
 }: PageBaseProps) {
     const [componentName, setComponentName] = useState(defaultComponentName);
     const [propsInput, setPropsInput] = useState(defaultPropsInput);
@@ -49,7 +51,7 @@ export default function PageBase({
 
     return (
         <>
-            {componentName && (
+            {showAssets && (
                 <>
                     <label className="flex items-center space-x-2 text-slate-700 font-medium mb-4">
                         <input
@@ -81,6 +83,7 @@ export default function PageBase({
                 bodyCode={bodyCode}
                 returnCode={returnCode}
                 codeLanguage={codeLanguage}
+                showAssets={showAssets}
             />
         </>
     );
