@@ -1,3 +1,4 @@
+import ContextPageBase from "@pages/hooks/ContextPageBase/ContextPageBase";
 import { ApiFetchDescription } from "@constants/routes/functions";
 import { AboutDescription, BasicComponentgeneratorDescription, privacyPolicyDescription } from "@constants/routes/general";
 import Alert from "@pages/components/Alert";
@@ -6,6 +7,7 @@ import Card from "@pages/components/Card";
 import FormField from "@pages/components/FormField";
 import Modal from "@pages/components/Modal";
 import ApiFetch from "@pages/functions/ApiFetch";
+import { UsecontextCustomizerDescription } from "@constants/routes/hooks";
 
 export type RouteItem = {
     path: string;
@@ -57,7 +59,13 @@ export const routes = [
     {
         group: "Functions",
         items: [
-            { path: "/api-fetch", title: "Api Fetch methods", intro: ApiFetchDescription, element: <ApiFetch /> },
+            { path: "/api-fetch", title: "Rest-Api functions", intro: ApiFetchDescription, element: <ApiFetch /> },
+        ],
+    },
+    {
+        group: "Hooks",
+        items: [
+            { path: "/useContext", title: "UseContext Customizer", intro: UsecontextCustomizerDescription, element: <ContextPageBase /> },
         ],
     },
     // {

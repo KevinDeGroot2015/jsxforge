@@ -110,7 +110,7 @@ import React, { useState } from 'react';
             <input type="description" name="description" required />
             <button type="submit">Submit</button>
         </form>
-`;
+    `;
     return (
         <>
             <PageBase headerCode={returnCodeStaticApi} showAssets={false}/>

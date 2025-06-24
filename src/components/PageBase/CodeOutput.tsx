@@ -5,7 +5,6 @@ import CodeVisualizator from "@components/CodeVisualizator/CodeVisualizator";
 type CodeOutputProps = {
     componentName?: string;
     propsInput?: string;
-    useTypescript: boolean;
     useStateInput?: string;
     headerCode?: string | string[];
     bodyCode?: string | string[];
@@ -17,7 +16,6 @@ type CodeOutputProps = {
 export default function CodeOutput({
     componentName,
     propsInput,
-    useTypescript,
     useStateInput,
     headerCode,
     bodyCode,
@@ -27,34 +25,31 @@ export default function CodeOutput({
     const generateComponentCode = (): string => {
         const props = parseCommaList(propsInput);
         const states = parseCommaList(useStateInput);
-        const usesTS = useTypescript;
 
         const propsString = props.join(", ");
         const usesState = states.length > 0;
 
         const importLine = [
             ...(Array.isArray(headerCode) ? headerCode : [headerCode ?? ""]),
-            usesState ? [`import { useState } from 'react';`] : "",
+            usesState ? `import { useState } from 'react';` : "",
             " ",
         ];
 
         const typeLines =
-            usesTS && props.length > 0
+            props.length > 0
                 ? [
                       `type ${componentName}Props = {`,
-                      ...props.map((prop) =>
-                          indentLine(`${prop}: ${inferPropType(prop)};`, 1)
-                      ),
-                      `};\n`,
+                      ...props.map((prop) => {
+                          const { type } = inferPropType(prop);
+                          return indentLine(`${prop}: ${type};`, 1);
+                      }),
+                      `};`,
+                      "",
                   ]
                 : [];
 
         const functionSignature =
-            props.length > 0
-                ? usesTS
-                    ? `{ ${propsString} }: ${componentName}Props`
-                    : `{ ${propsString} }`
-                : "";
+            props.length > 0 ? `{ ${propsString} }: ${componentName}Props` : "";
 
         const stateLines = usesState
             ? [
@@ -63,13 +58,17 @@ export default function CodeOutput({
                       indentLine(
                           `const [${state}, set${capitalize(
                               state
-                          )}] = useState${usesTS ? "<any>" : ""}();`,
+                          )}] = useState<any>();`,
                           1
                       )
                   ),
                   "",
               ]
             : [];
+
+        const bodyLines = Array.isArray(bodyCode)
+            ? bodyCode.map((line) => indentLine(line, 1))
+            : [indentLine(bodyCode ?? "", 1)];
 
         const returnLines = [
             indentLine("return (", 1),
@@ -81,7 +80,7 @@ export default function CodeOutput({
             ? [
                   `export default function ${componentName}(${functionSignature}) {`,
                   ...stateLines,
-                  ...(Array.isArray(bodyCode) ? bodyCode : [bodyCode ?? ""]),
+                  ...bodyLines,
                   ...returnLines,
                   `}`,
               ]

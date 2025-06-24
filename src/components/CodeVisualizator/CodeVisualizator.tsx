@@ -24,7 +24,7 @@ export default function CodeBlock({ codeFunction, title }: CodeBlockProps) {
 
     return (
         <>
-            {title && <h2 className="font-bold pt-4">{title}</h2>}
+            {title && <h2 className="font-bold text-gray-800 pt-4">{title}</h2>}
             <div className="relative">
                 <SyntaxHighlighter
                     language="tsx"

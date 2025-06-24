@@ -1,5 +1,5 @@
 import { useState } from "react";
-import CodeOutput from "@components/CodeOutput/CodeOutput";
+import CodeOutput from "@components/PageBase/CodeOutput";
 import FormField from "@components/FormField/FormField";
 
 type PageBaseProps = {
@@ -26,8 +26,6 @@ export default function PageBase({
     const [componentName, setComponentName] = useState(defaultComponentName);
     const [propsInput, setPropsInput] = useState(defaultPropsInput);
     const [useStateInput, setUsestateInput] = useState(defaultUseStateInput);
-    const [useTypescript, setUseTypescript] = useState(true);
-
     const fields = [
         {
             label: "Component Name:",
@@ -53,16 +51,6 @@ export default function PageBase({
         <>
             {showAssets && (
                 <>
-                    <label className="flex items-center space-x-2 text-slate-700 font-medium mb-4">
-                        <input
-                            type="checkbox"
-                            checked={useTypescript}
-                            onChange={(e) => setUseTypescript(e.target.checked)}
-                            className="form-checkbox h-5 w-5 text-blue-600"
-                        />
-                        <span>Use TypeScript</span>
-                    </label>
-
                     <div className="grid gap-6 sm:grid-cols-2">
                         {fields.map((field) => (
                             <FormField
@@ -77,7 +65,6 @@ export default function PageBase({
             <CodeOutput
                 componentName={componentName}
                 propsInput={propsInput}
-                useTypescript={useTypescript}
                 useStateInput={useStateInput}
                 headerCode={headerCode}
                 bodyCode={bodyCode}
