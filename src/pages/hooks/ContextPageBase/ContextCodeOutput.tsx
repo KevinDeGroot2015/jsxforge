@@ -1,9 +1,6 @@
+import { useMemo } from "react";
 import { indentLine } from "@utils/IndentLine";
-import {
-    parseCommaList,
-    inferPropType,
-    capitalize,
-} from "@utils/codeOutputUtils";
+import { parseCommaList, inferPropType } from "@utils/codeOutputUtils";
 import CodeVisualizator from "@components/CodeVisualizator/CodeVisualizator";
 
 type ContextCodeOutputProps = {
@@ -17,7 +14,7 @@ export default function ContextCodeOutput({
     stateInput,
     functionInput,
 }: ContextCodeOutputProps) {
-    const generateContextCode = (): string => {
+    const contextComponentCode = useMemo((): string => {
         const stateEntries = parseCommaList(stateInput);
         const functionEntries = parseCommaList(functionInput);
 
@@ -28,33 +25,31 @@ export default function ContextCodeOutput({
         const valueProps: string[] = [];
 
         stateEntries.forEach((name) => {
-            const capitalized = capitalize(name);
             const { type, defaultValue } = inferPropType(name);
 
             typeLines.push(
                 indentLine(`${name}: ${type};`, 1),
                 indentLine(
-                    `set${capitalized}: React.Dispatch<React.SetStateAction<${type}>>;`,
+                    `set${name}: React.Dispatch<React.SetStateAction<${type}>>;`,
                     1
                 )
             );
 
             stateLines.push(
                 indentLine(
-                    `const [${name}, set${capitalized}] = useState<${type}>(${defaultValue});`,
+                    `const [${name}, set${name}] = useState<${type}>(${defaultValue});`,
                     1
                 )
             );
 
             contextInit.push(
                 indentLine(`${name}: ${defaultValue},`, 1),
-                indentLine(`set${capitalized}: () => {}`, 1)
+                indentLine(`set${name}: () => {}`, 1)
             );
 
-            valueProps.push(`${name}, set${capitalized}`);
+            valueProps.push(`${name}, set${name}`);
         });
 
-        // Handle functions
         functionEntries.forEach((funcName) => {
             const inferred = `${funcName}: () => void;`;
             const defaultImpl = `${funcName}: () => {},`;
@@ -98,12 +93,41 @@ export default function ContextCodeOutput({
             "",
             ...provider,
         ].join("\n");
-    };
+    }, [contextName, stateInput, functionInput]);
+
+    const providerCode = useMemo((): string => {
+        return [
+            `import { ${contextName}Provider } from "contexts/${contextName}Context";`,
+            "",
+            `<${contextName}Provider>`,
+            indentLine(`{children}`, 1),
+            `</${contextName}Provider>`,
+        ].join("\n");
+    }, [contextName]);
+
+    const contextCode = useMemo((): string => {
+        return [
+            `import { useContext } from 'react';`,
+            `import { ${contextName}Provider } from "contexts/${contextName}Context";`,
+            "",
+            `const { ${stateInput}, ${functionInput} } = useContext(${contextName}Context);`,
+        ].join("\n");
+    }, [contextName, stateInput, functionInput]);
 
     return (
-        <CodeVisualizator
-            title="useContext template"
-            codeFunction={generateContextCode}
-        />
+        <>
+            <CodeVisualizator
+                title="useContext template"
+                codeFunction={() => contextComponentCode}
+            />
+            <CodeVisualizator
+                title="Provider component"
+                codeFunction={() => providerCode}
+            />
+            <CodeVisualizator
+                title="Context component"
+                codeFunction={() => contextCode}
+            />
+        </>
     );
 }
