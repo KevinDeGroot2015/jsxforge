@@ -9,7 +9,6 @@ type PageBaseProps = {
     headerCode?: string | string[];
     bodyCode?: string | string[];
     returnCode?: string;
-    codeLanguage?: string;
     showAssets?: boolean;
 };
 
@@ -20,7 +19,6 @@ export default function PageBase({
     headerCode,
     bodyCode,
     returnCode,
-    codeLanguage,
     showAssets = true,
 }: PageBaseProps) {
     const [componentName, setComponentName] = useState(defaultComponentName);
@@ -69,7 +67,6 @@ export default function PageBase({
                 headerCode={headerCode}
                 bodyCode={bodyCode}
                 returnCode={returnCode}
-                codeLanguage={codeLanguage}
                 showAssets={showAssets}
             />
         </>

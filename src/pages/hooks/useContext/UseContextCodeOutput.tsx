@@ -9,7 +9,7 @@ type ContextCodeOutputProps = {
     functionInput?: string;
 };
 
-export default function ContextCodeOutput({
+export default function UseContextCodeOutput({
     contextName,
     stateInput,
     functionInput,
@@ -100,7 +100,7 @@ export default function ContextCodeOutput({
             `import { ${contextName}Provider } from "contexts/${contextName}Context";`,
             "",
             `<${contextName}Provider>`,
-            indentLine(`{children}`, 1),
+            indentLine(`{Place the Provider around your section}`, 1),
             `</${contextName}Provider>`,
         ].join("\n");
     }, [contextName]);

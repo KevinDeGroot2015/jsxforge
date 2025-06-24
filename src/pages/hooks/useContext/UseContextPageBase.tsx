@@ -1,5 +1,5 @@
 import { useState } from "react";
-import ContextCodeOutput from "./ContextCodeOutput";
+import ContextCodeOutput from "./UseContextCodeOutput";
 import FormField from "@components/FormField/FormField";
 
 export default function ContextPageBase() {

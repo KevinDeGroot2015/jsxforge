@@ -10,7 +10,6 @@ type CodeOutputProps = {
     headerCode?: string | string[];
     bodyCode?: string | string[];
     returnCode?: string;
-    codeLanguage?: string;
     showAssets?: boolean;
 };
 
@@ -71,8 +70,8 @@ export default function CodeOutput({
                 : [];
 
             const bodyLines = Array.isArray(bodyCode)
-                ? bodyCode.map((line) => indentLine(line, 1))
-                : [indentLine(bodyCode ?? "", 1)];
+                ? bodyCode.map((line) => indentLine(line, 2))
+                : [indentLine((bodyCode ?? "").trim(), 1)];
 
             const returnLines = [
                 indentLine("return (", 1),
@@ -81,7 +80,7 @@ export default function CodeOutput({
             ];
 
             const componentLines = returnCode?.trim()
-                ? [
+                ? [   ` `,
                       `export default function ${componentName}(${functionSignature}) {`,
                       ...stateLines,
                       ...bodyLines,

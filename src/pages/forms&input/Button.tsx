@@ -4,6 +4,7 @@ export default function Button() {
     const returnCode = `
         <button 
             onClick={onClick}
+            disabled={disabled}
             className="text-xs font-semibold px-3 py-1.5 rounded shadow-md">
             {label}
         </button>
@@ -11,7 +12,7 @@ export default function Button() {
     return (
         <PageBase
             defaultComponentName="Button"
-            defaultPropsInput="label, onClick"
+            defaultPropsInput="label, onClick, disabled"
             returnCode={returnCode}
         />
     );

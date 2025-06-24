@@ -11,6 +11,11 @@ export function inferPropType(prop: string): {
 } {
     const lower = prop.toLowerCase();
 
+    if (prop.includes("File"))
+        return {
+            type: "(file: File | null) => void",
+            defaultValue: "() => {}",
+        };
     if (prop.startsWith("on"))
         return { type: "() => void", defaultValue: "() => {}" };
     if (prop.startsWith("set"))
@@ -22,7 +27,11 @@ export function inferPropType(prop: string): {
     ) {
         return { type: "number", defaultValue: "0" };
     }
-    if (["is", "has", "should", "can"].some((k) => lower.startsWith(k))) {
+    if (
+        ["is", "has", "should", "can", "disabled", "enabled"].some((k) =>
+            lower.startsWith(k)
+        )
+    ) {
         return { type: "boolean", defaultValue: "false" };
     }
     if (["groups", "items", "list", "array"].some((k) => lower.includes(k))) {
