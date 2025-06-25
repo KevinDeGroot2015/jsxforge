@@ -6,7 +6,7 @@ export default function Button() {
             onClick={onClick}
             disabled={disabled}
             className="text-xs font-semibold px-3 py-1.5 rounded shadow-md">
-            {label}
+                {label}
         </button>
     `;
     return (

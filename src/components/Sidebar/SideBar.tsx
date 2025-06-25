@@ -40,56 +40,57 @@ export default function Sidebar() {
                                 <X className="w-6 h-6" />
                             </button>
                         </div>
+                        <div className="h-[calc(100%-75px)] overflow-y-auto">
+                            <nav className="flex flex-col gap-2">
+                                {routes.map(({ group, items }) => (
+                                    <div key={group} className="pb-2">
+                                        <button
+                                            onClick={() => toggleGroup(group)}
+                                            className="flex justify-between items-center w-full font-medium"
+                                        >
+                                            {group}
+                                            {openGroups.includes(group) ? (
+                                                <ChevronDown className="w-4 h-4" />
+                                            ) : (
+                                                <ChevronRight className="w-4 h-4" />
+                                            )}
+                                        </button>
 
-                        <nav className="flex flex-col gap-2">
-                            {routes.map(({ group, items }) => (
-                                <div key={group} className="pb-2">
-                                    <button
-                                        onClick={() => toggleGroup(group)}
-                                        className="flex justify-between items-center w-full font-medium"
-                                    >
-                                        {group}
-                                        {openGroups.includes(group) ? (
-                                            <ChevronDown className="w-4 h-4" />
-                                        ) : (
-                                            <ChevronRight className="w-4 h-4" />
-                                        )}
-                                    </button>
-
-                                    <AnimatePresence>
-                                        {openGroups.includes(group) && (
-                                            <motion.div
-                                                initial={{
-                                                    height: 0,
-                                                    opacity: 0,
-                                                }}
-                                                animate={{
-                                                    height: "auto",
-                                                    opacity: 1,
-                                                }}
-                                                exit={{
-                                                    height: 0,
-                                                    opacity: 0,
-                                                }}
-                                                className="overflow-hidden pl-4 mt-4 flex flex-col gap-3"
-                                            >
-                                                {items.map(
-                                                    ({ path, title }) => (
-                                                        <Link
-                                                            key={path}
-                                                            to={path}
-                                                            onClick={toggleMenu}
-                                                        >
-                                                            {title}
-                                                        </Link>
-                                                    )
-                                                )}
-                                            </motion.div>
-                                        )}
-                                    </AnimatePresence>
-                                </div>
-                            ))}
-                        </nav>
+                                        <AnimatePresence>
+                                            {openGroups.includes(group) && (
+                                                <motion.div
+                                                    initial={{
+                                                        height: 0,
+                                                        opacity: 0,
+                                                    }}
+                                                    animate={{
+                                                        height: "auto",
+                                                        opacity: 1,
+                                                    }}
+                                                    exit={{
+                                                        height: 0,
+                                                        opacity: 0,
+                                                    }}
+                                                    className="overflow-hidden pl-4 mt-4 flex flex-col gap-3"
+                                                >
+                                                    {items.map(
+                                                        ({ path, title }) => (
+                                                            <Link
+                                                                key={path}
+                                                                to={path}
+                                                                onClick={toggleMenu}
+                                                            >
+                                                                {title}
+                                                            </Link>
+                                                        )
+                                                    )}
+                                                </motion.div>
+                                            )}
+                                        </AnimatePresence>
+                                    </div>
+                                ))}
+                            </nav>
+                        </div>
                     </motion.div>
                 </motion.div>
             )}

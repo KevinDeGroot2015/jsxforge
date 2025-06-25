@@ -65,13 +65,17 @@ export default function CodeOutput({
                               1
                           )
                       ),
-                      "",
+                      " ",
                   ]
                 : [];
 
             const bodyLines = Array.isArray(bodyCode)
-                ? bodyCode.map((line) => indentLine(line, 2))
-                : [indentLine((bodyCode ?? "").trim(), 1)];
+                ? bodyCode
+                      .map((line) => indentLine(line, 2))
+                      .filter((line) => line.trim() !== "")
+                : [indentLine((bodyCode ?? "").trim(), 1)].filter(
+                      (line) => line.trim() !== ""
+                  );
 
             const returnLines = [
                 indentLine("return (", 1),
@@ -80,11 +84,12 @@ export default function CodeOutput({
             ];
 
             const componentLines = returnCode?.trim()
-                ? [   ` `,
+                ? [
+                      ` `,
                       `export default function ${componentName}(${functionSignature}) {`,
-                      ...stateLines,
-                      ...bodyLines,
-                      ...returnLines,
+                      ...(stateLines.length > 0 ? stateLines : []),
+                      ...(bodyLines.length > 0 ? bodyLines : []),
+                      ...(returnLines.length > 0 ? returnLines : []),
                       `}`,
                   ]
                 : [];
