@@ -36,15 +36,18 @@ export default function CodeOutput({
                 " ",
             ];
 
-            const typeLines = [
-                `type ${componentName}Props = {`,
-                ...props.map((prop) => {
-                    const { type } = inferPropType(prop);
-                    return indentLine(`${prop}: ${type};`, 1);
-                }),
-                `};`,
-                " ",
-            ];
+            const typeLines =
+                props.length > 0
+                    ? [
+                          `type ${componentName}Props = {`,
+                          ...props.map((prop) => {
+                              const { type } = inferPropType(prop);
+                              return indentLine(`${prop}: ${type};`, 1);
+                          }),
+                          `};`,
+                          " ",
+                      ]
+                    : [];
 
             const functionSignature =
                 props.length > 0
@@ -53,14 +56,12 @@ export default function CodeOutput({
 
             const stateLines = usesState
                 ? [
-                      "",
                       ...states.map((state) =>
                           indentLine(
                               `const [${state}, set${state}] = useState<any>();`,
                               1
                           )
                       ),
-                      " ",
                   ]
                 : [];
 
@@ -75,16 +76,18 @@ export default function CodeOutput({
             const componentLines = [
                 `export default function ${componentName}(${functionSignature}) {`,
                 ...(stateLines.length > 0 ? stateLines : []),
-                ...(bodyLines.length > 3 ? bodyLines : []),
+                ...(bodyLines.length > 0 ? bodyLines : []),
                 ...(returnLines.length > 0 ? returnLines : []),
                 `}`,
             ];
 
             return [
-                ...(importLine.length > 3 ? importLine : []), 
-                ...(typeLines.length > 0 ? typeLines : []), 
+                ...(importLine.length > 0 ? importLine : []),
+                ...(typeLines.length > 0 ? typeLines : []),
                 ...(componentLines.length > 0 ? componentLines : []),
-            ].filter(Boolean).join("\n");
+            ]
+                .filter(Boolean)
+                .join("\n");
         };
     }, [
         componentName,

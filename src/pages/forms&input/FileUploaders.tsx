@@ -4,13 +4,13 @@ export default function FileUploaders() {
     const bodyCodeSinleUploader = `
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0] || null;
-        onFileSelect(file);
+        setFile(file);
     };
     `;
 
     const returnCodeSinleUploader = `
         <div className="flex flex-col gap-2">
-            <label className="text-sm font-medium text-gray-700">Upload een bestand</label>
+            <label className="text-sm font-medium text-gray-700">Upload a file</label>
             <input
                 type="file"
                 onChange={handleChange}
@@ -79,7 +79,8 @@ import { useRef } from 'react';`;
         <>
             <PageBase
                 defaultComponentName="SingleFileUploader"
-                defaultPropsInput="onFileDrop"
+                defaultPropsInput="file"
+                defaultUseStateInput="file"
                 headerCode="// Single file uploader component"
                 bodyCode={bodyCodeSinleUploader}
                 returnCode={returnCodeSinleUploader}

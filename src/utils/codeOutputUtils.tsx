@@ -11,11 +11,12 @@ export function inferPropType(prop: string): {
 } {
     const lower = prop.toLowerCase();
 
-    if (prop.includes("File"))
+    if (["file"].some((k) => lower.includes(k))) {
         return {
             type: "(file: File | null) => void",
             defaultValue: "() => {}",
         };
+    }
     if (prop.startsWith("on"))
         return { type: "() => void", defaultValue: "() => {}" };
     if (prop.startsWith("set"))
