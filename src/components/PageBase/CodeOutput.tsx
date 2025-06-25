@@ -7,8 +7,8 @@ type CodeOutputProps = {
     componentName?: string;
     propsInput?: string;
     useStateInput?: string;
-    headerCode?: string | string[];
-    bodyCode?: string | string[];
+    headerCode?: string;
+    bodyCode?: string;
     returnCode?: string;
     showAssets?: boolean;
 };
@@ -31,25 +31,20 @@ export default function CodeOutput({
             const usesState = states.length > 0;
 
             const importLine = [
-                ...(Array.isArray(headerCode)
-                    ? headerCode
-                    : [headerCode ?? ""]),
+                headerCode,
                 usesState ? `import { useState } from 'react';` : "",
                 " ",
             ];
 
-            const typeLines =
-                props.length > 0
-                    ? [
-                          `type ${componentName}Props = {`,
-                          ...props.map((prop) => {
-                              const { type } = inferPropType(prop);
-                              return indentLine(`${prop}: ${type};`, 1);
-                          }),
-                          `};`,
-                          "",
-                      ]
-                    : [];
+            const typeLines = [
+                `type ${componentName}Props = {`,
+                ...props.map((prop) => {
+                    const { type } = inferPropType(prop);
+                    return indentLine(`${prop}: ${type};`, 1);
+                }),
+                `};`,
+                " ",
+            ];
 
             const functionSignature =
                 props.length > 0
@@ -69,13 +64,7 @@ export default function CodeOutput({
                   ]
                 : [];
 
-            const bodyLines = Array.isArray(bodyCode)
-                ? bodyCode
-                      .map((line) => indentLine(line, 2))
-                      .filter((line) => line.trim() !== "")
-                : [indentLine((bodyCode ?? "").trim(), 1)].filter(
-                      (line) => line.trim() !== ""
-                  );
+            const bodyLines = [indentLine(bodyCode ?? "", 2)];
 
             const returnLines = [
                 indentLine("return (", 1),
@@ -83,20 +72,19 @@ export default function CodeOutput({
                 indentLine(");", 1),
             ];
 
-            const componentLines = returnCode?.trim()
-                ? [
-                      ` `,
-                      `export default function ${componentName}(${functionSignature}) {`,
-                      ...(stateLines.length > 0 ? stateLines : []),
-                      ...(bodyLines.length > 0 ? bodyLines : []),
-                      ...(returnLines.length > 0 ? returnLines : []),
-                      `}`,
-                  ]
-                : [];
+            const componentLines = [
+                `export default function ${componentName}(${functionSignature}) {`,
+                ...(stateLines.length > 0 ? stateLines : []),
+                ...(bodyLines.length > 3 ? bodyLines : []),
+                ...(returnLines.length > 0 ? returnLines : []),
+                `}`,
+            ];
 
-            return [...importLine, ...typeLines, ...componentLines]
-                .filter(Boolean)
-                .join("\n");
+            return [
+                ...(importLine.length > 3 ? importLine : []), 
+                ...(typeLines.length > 0 ? typeLines : []), 
+                ...(componentLines.length > 0 ? componentLines : []),
+            ].filter(Boolean).join("\n");
         };
     }, [
         componentName,

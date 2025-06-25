@@ -6,8 +6,8 @@ type PageBaseProps = {
     defaultComponentName?: string | undefined;
     defaultPropsInput?: string;
     defaultUseStateInput?: string;
-    headerCode?: string | string[];
-    bodyCode?: string | string[];
+    headerCode?: string;
+    bodyCode?: string;
     returnCode?: string;
     showAssets?: boolean;
 };

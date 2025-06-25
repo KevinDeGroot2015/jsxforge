@@ -1,9 +1,15 @@
 import PageBase from "@components/PageBase/PageBase";
 
 export default function ToggleSwitch() {
+    const bodyCode = `
+    const handleChange = () => {
+        setEnabled(!enabled);
+    }
+    `;
+
     const returnCode = `
         <button
-            onClick={() => onChange(!enabled)}
+            onClick={handleChange}
             className={\`w-12 h-6 flex items-center rounded-full p-1 transition-colors \${enabled ? 'bg-blue-600' : 'bg-gray-300'}\`}
         >
             <div
@@ -11,10 +17,12 @@ export default function ToggleSwitch() {
             />
         </button>
     `;
+    
     return (
         <PageBase
             defaultComponentName="ToggleSwitch"
-            defaultPropsInput="enabled, onChange"
+            defaultPropsInput="setEnabled"
+            bodyCode={bodyCode}
             returnCode={returnCode}
         />
     );
