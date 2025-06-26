@@ -11,36 +11,36 @@ export function inferPropType(prop: string): {
 } {
     const lower = prop.toLowerCase();
 
-    if (["file"].some((k) => lower.includes(k))) {
-        return {
-            type: "(file: File | null) => void",
-            defaultValue: "() => {}",
-        };
-    }
-    if (prop.startsWith("on"))
-        return { type: "() => void", defaultValue: "() => {}" };
-    if (prop.startsWith("set"))
-        return { type: "(value: string) => void", defaultValue: "() => {}" };
-    if (
-        ["count", "age", "total", "number", "index"].some((k) =>
-            lower.includes(k)
-        )
-    ) {
-        return { type: "number", defaultValue: "0" };
-    }
-    if (
-        ["is", "has", "should", "can", "disabled", "enabled"].some((k) =>
-            lower.startsWith(k)
-        )
-    ) {
-        return { type: "boolean", defaultValue: "false" };
-    }
-    if (["groups", "items", "list", "array"].some((k) => lower.includes(k))) {
-        return { type: "string[]", defaultValue: "[]" };
-    }
-    if (["name", "title", "label", "text"].some((k) => lower.includes(k))) {
-        return { type: "string", defaultValue: '""' };
-    }
+    const startsWith = (prefix: string) => prop.startsWith(prefix);
+    const lowerIncludes = (fragment: string) => lower.includes(fragment);
+    const lowerStartsWith = (prefix: string) => lower.startsWith(prefix);
 
-    return { type: "string", defaultValue: "undefined" };
+    switch (true) {
+        case ["file"].some(lowerIncludes):
+            return {
+                type: "(file: File | null) => void",
+                defaultValue: "() => {}",
+            };
+
+        case startsWith("on"):
+            return { type: "() => void", defaultValue: "() => {}" };
+
+        case startsWith("set"):
+            return { type: "(value: string) => void", defaultValue: "() => {}" };
+
+        case ["count", "age", "total", "number", "index"].some(lowerIncludes):
+            return { type: "number", defaultValue: "0" };
+
+        case ["is", "has", "should", "can", "disabled", "enabled"].some(lowerStartsWith):
+            return { type: "boolean", defaultValue: "false" };
+
+        case ["groups", "items", "list", "array"].some(lowerIncludes):
+            return { type: "string[]", defaultValue: "[]" };
+
+        case ["name", "title", "label", "text"].some(lowerIncludes):
+            return { type: "string", defaultValue: '""' };
+
+        default:
+            return { type: "string", defaultValue: "undefined" };
+    }
 }

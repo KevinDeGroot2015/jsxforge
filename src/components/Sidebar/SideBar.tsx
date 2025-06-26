@@ -73,7 +73,7 @@ export default function Sidebar() {
                                                     }}
                                                     className="overflow-hidden pl-4 mt-4 flex flex-col gap-3"
                                                 >
-                                                    {items.map(
+                                                    {items.slice().sort((a, b) => a.title.localeCompare(b.title)).map(
                                                         ({ path, title }) => (
                                                             <Link
                                                                 key={path}

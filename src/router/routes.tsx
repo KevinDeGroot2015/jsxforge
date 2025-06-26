@@ -1,20 +1,20 @@
-import UseContextPageBase from "@pages/hooks/useContext/UseContextPageBase";
 import { ApiFetchDescription } from "@constants/routes/functions";
 import { AboutDescription, BasicComponentgeneratorDescription, privacyPolicyDescription } from "@constants/routes/general";
-import Alert from "@pages/layout&containers/Alert";
-import Button from "@pages/forms&input/Button";
-import Card from "@pages/layout&containers/Card";
-import FormField from "@pages/forms&input/FormField";
-import Modal from "@pages/layout&containers/Modal";
-import ApiFetch from "@pages/functions/ApiFetch";
 import { UsecontextCustomizerDescription } from "@constants/routes/hooks";
-import TextArea from "@pages/forms&input/TextArea";
-import CheckBox from "@pages/forms&input/Checkbox";
-import RadioGroup from "@pages/forms&input/RadioGroup";
-import ToggleSwitch from "@pages/forms&input/ToggleSwitch";
-import SelectDropdown from "@pages/forms&input/SelectDropdown";
-import FileUploaders from "@pages/forms&input/FileUploaders";
-import SearchInput from "@pages/forms&input/SearchInput";
+import UseContextPageBase from "@pages/hook-generator/useContext/UseContextPageBase";
+import Alert from "@pages/component-generator/Alert";
+import Button from "@pages/component-generator/Button";
+import Card from "@pages/component-generator/Card";
+import FormField from "@pages/component-generator/FormField";
+import Modal from "@pages/component-generator/Modal";
+import ApiFetch from "@pages/functions/ApiFetch";
+import TextArea from "@pages/component-generator/TextArea";
+import CheckBox from "@pages/component-generator/Checkbox";
+import RadioGroup from "@pages/component-generator/RadioGroup";
+import ToggleSwitch from "@pages/component-generator/ToggleSwitch";
+import SelectDropdown from "@pages/component-generator/SelectDropdown";
+import FileUploaders from "@pages/component-generator/FileUploaders";
+import SearchInput from "@pages/component-generator/SearchInput";
 
 export type RouteItem = {
     path: string;
@@ -54,7 +54,7 @@ export const routes = [
         ],
     },
     {
-        group: "Forms & input",
+        group: "Component Generator",
         items: [
             { path: "/button", title: "Button", element: <Button /> },
             { path: "/formfield", title: "Form Field", element: <FormField /> },
@@ -65,11 +65,6 @@ export const routes = [
             { path: "/selectdropdown", title: "Select Dropdown", element: <SelectDropdown /> },
             { path: "/fileuploaders", title: "File uploaders (select & drag)", element: <FileUploaders /> },
             { path: "/searchinput", title: "Search input", element: <SearchInput /> },
-        ],
-    },
-    {
-        group: "Layout & Containers",
-        items: [
             { path: "/alert", title: "Alert", element: <Alert /> },
             { path: "/modal", title: "Modal", element: <Modal /> },
             { path: "/card", title: "Card", element: <Card /> },
@@ -78,17 +73,17 @@ export const routes = [
     {
         group: "Functions",
         items: [
-            { path: "/api-fetch", title: "Rest-Api functions", intro: ApiFetchDescription, element: <ApiFetch /> },
+            { path: "/api-fetch", title: "Rest-Api fetch/post functions", intro: ApiFetchDescription, element: <ApiFetch /> },
         ],
     },
     {
-        group: "Hooks",
+        group: "Hook Generator",
         items: [
             { path: "/useContext", title: "UseContext Customizer", intro: UsecontextCustomizerDescription, element: <UseContextPageBase /> },
         ],
     },
     // {
-    //     group: "Templates",
+    //     group: "Template Library",
     //     items: [
     //         { path: "/dashboard", title: "Dashboard" },
     //         { path: "/login", title: "Login" },

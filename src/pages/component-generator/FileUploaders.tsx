@@ -31,7 +31,7 @@ import { useRef } from 'react';`;
         setDragActive(false);
 
         if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-            onFileDrop(e.dataTransfer.files[0]);
+            setFile(e.dataTransfer.files[0]);
         }
     };
 
@@ -48,7 +48,7 @@ import { useRef } from 'react';`;
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
-            onFileDrop(e.target.files[0]);
+            setFile(e.target.files[0]);
         }
     };
   `;
@@ -88,7 +88,7 @@ import { useRef } from 'react';`;
             <PageBase
                 defaultComponentName="DragFileUploader"
                 defaultPropsInput="onFileSelect"
-                defaultUseStateInput="dragActive"
+                defaultUseStateInput="file, dragActive"
                 headerCode={headerCodeDragUploader}
                 bodyCode={bodyCodeDragUploader}
                 returnCode={returnCodeDragUploader}
