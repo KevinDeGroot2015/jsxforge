@@ -3,8 +3,11 @@ export const AlertDescription = (
         <section className="py-2">
             <h2 className="font-bold mb-4 text-gray-900">What is JSXForge?</h2>
             <p className="text-gray-700 leading-relaxed">
-                JSXForge is a user-friendly tool that allows you to create React
-                components without writing code. <br />
+                Mainly built for myself Kevin de Groot, by ReactJS/Typescript/Router-dom/Tailwind. 
+                <br />
+                I was tired of looking up in the React.dev documentation
+                how to build a simple component, so I decided to build a tool that contains basic components but also complex component interactions.
+
                 Whether you're a developer looking to speed up your workflow or
                 a beginner experimenting with front-end design, JSXForge
                 provides an intuitive interface and powerful functionality to

@@ -1,3 +1,7 @@
+export function capitalize(str: string): string {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
 export function parseCommaList(value?: string): string[] {
     return (value ?? "")
         .split(",")
@@ -7,7 +11,7 @@ export function parseCommaList(value?: string): string[] {
 
 export function inferPropType(prop: string): {
     type: string;
-    defaultValue: string;
+    defaultValue: string | null;
 } {
     const lower = prop.toLowerCase();
 
@@ -39,6 +43,10 @@ export function inferPropType(prop: string): {
 
         case ["name", "title", "label", "text"].some(lowerIncludes):
             return { type: "string", defaultValue: '""' };
+
+        // Handle specific cases for "value" and "placeholder"
+        case startsWith("inputType"):
+            return { type: "'input' | 'textarea'", defaultValue: null };
 
         default:
             return { type: "string", defaultValue: "undefined" };
