@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { indentLine } from "@utils/IndentLine";
-import { parseCommaList, inferPropType } from "@utils/codeOutputUtils";
+import { parseCommaList, inferPropType, capitalize } from "@utils/codeOutputUtils";
 import CodeVisualizator from "@components/CodeVisualizator/CodeVisualizator";
 
 type CodeOutputProps = {
@@ -31,8 +31,10 @@ export default function CodeOutput({
             const usesState = states.length > 0;
 
             const importLine = [
-                headerCode,
                 usesState ? `import { useState } from 'react';` : "",
+                ...(Array.isArray(headerCode)
+                    ? headerCode
+                    : [headerCode ?? ""]),
                 " ",
             ];
 
@@ -45,7 +47,7 @@ export default function CodeOutput({
                               return indentLine(`${prop}: ${type};`, 1);
                           }),
                           `};`,
-                          " ",
+                          "",
                       ]
                     : [];
 
@@ -56,16 +58,26 @@ export default function CodeOutput({
 
             const stateLines = usesState
                 ? [
+                      "",
                       ...states.map((state) =>
                           indentLine(
-                              `const [${state}, set${state}] = useState<any>();`,
+                              `const [${state}, set${capitalize(
+                                  state
+                              )}] = useState<any>();`,
                               1
                           )
                       ),
+                      " ",
                   ]
                 : [];
 
-            const bodyLines = [indentLine(bodyCode ?? "", 2)];
+            const bodyLines = Array.isArray(bodyCode)
+                ? bodyCode
+                      .map((line) => indentLine(line, 2))
+                      .filter((line) => line.trim() !== "")
+                : [indentLine((bodyCode ?? "").trim(), 1)].filter(
+                      (line) => line.trim() !== ""
+                  );
 
             const returnLines = [
                 indentLine("return (", 1),
@@ -73,19 +85,18 @@ export default function CodeOutput({
                 indentLine(");", 1),
             ];
 
-            const componentLines = [
-                `export default function ${componentName}(${functionSignature}) {`,
-                ...(stateLines.length > 0 ? stateLines : []),
-                ...(bodyLines.length > 0 ? bodyLines : []),
-                ...(returnLines.length > 0 ? returnLines : []),
-                `}`,
-            ];
+            const componentLines = returnCode?.trim()
+                ? [
+                      ` `,
+                      `export default function ${componentName}(${functionSignature}) {`,
+                      ...(stateLines.length > 0 ? stateLines : []),
+                      ...(bodyLines.length > 0 ? bodyLines : []),
+                      ...(returnLines.length > 0 ? returnLines : []),
+                      `}`,
+                  ]
+                : [];
 
-            return [
-                ...(importLine.length > 0 ? importLine : []),
-                ...(typeLines.length > 0 ? typeLines : []),
-                ...(componentLines.length > 0 ? componentLines : []),
-            ]
+            return [...importLine, ...typeLines, ...componentLines]
                 .filter(Boolean)
                 .join("\n");
         };
@@ -125,3 +136,4 @@ export default function CodeOutput({
         </>
     );
 }
+

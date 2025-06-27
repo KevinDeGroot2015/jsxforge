@@ -3,12 +3,21 @@ export const BasicComponentgeneratorDescription = (
         <section className="py-2">
             <h3 className="font-bold mb-4 text-gray-900">What is JSXForge?</h3>
             <p className="text-gray-700 leading-relaxed">
-                JSXForge is a user-friendly tool that allows you to create React
-                components without writing code. <br />
-                Whether you're a developer looking to speed up your workflow or
-                a beginner experimenting with front-end design, JSXForge
-                provides an intuitive interface and powerful functionality to
-                get you started quickly.
+                Mainly built for myself Kevin de Groot, created with:
+                <ul className="list-disc list-inside text-gray-700 space-y-1">
+                    <li>ReactJS</li>
+                    <li>Typescript</li>
+                    <li>React router dom</li>
+                    <li>Tailwind</li>
+                </ul>
+                <br />
+                I was tired of looking up in the React.dev documentation how to
+                construct a useContext template for example, so I decided to
+                build a tool that contains basic UI components but also complex
+                component interactions.
+                <br />
+                <br />I wanted this site to function as my personal portfolio,
+                so I can show my work to others made by and made for React.
             </p>
         </section>
         <section className="py-2">
@@ -61,9 +70,7 @@ export const AboutDescription = (
             quality.
         </p>
 
-        <h3 className="font-semibold mb-4 text-gray-800">
-            Who it's for
-        </h3>
+        <h3 className="font-semibold mb-4 text-gray-800">Who it's for</h3>
         <ul className="list-disc list-inside text-gray-700 mb-6 space-y-2">
             <li>
                 <strong>For everyone</strong> initially for myself, but also
@@ -99,11 +106,8 @@ export const AboutDescription = (
 
 export const privacyPolicyDescription = (
     <>
-
         <section className="mb-5">
-            <h3 className="font-semibold mb-4">
-                1. Information We Collect
-            </h3>
+            <h3 className="font-semibold mb-4">1. Information We Collect</h3>
             <ul className="list-disc list-inside space-y-2">
                 <li>
                     <strong>Personal Information:</strong> Name, email address,
@@ -135,9 +139,7 @@ export const privacyPolicyDescription = (
         </section>
 
         <section className="mb-5">
-            <h3 className="font-semibold mb-4">
-                3. Sharing Your Information
-            </h3>
+            <h3 className="font-semibold mb-4">3. Sharing Your Information</h3>
             <ul className="list-disc list-inside space-y-2">
                 <li>
                     We do <strong>not</strong> sell your personal information.
@@ -149,12 +151,10 @@ export const privacyPolicyDescription = (
         </section>
 
         <section className="mb-5">
-            <h3 className="font-semibold mb-4">
-                4. Your Rights and Choices
-            </h3>
+            <h3 className="font-semibold mb-4">4. Your Rights and Choices</h3>
             <p>
                 You may have rights to access, update, delete, or restrict the
-                use of your personal data. 
+                use of your personal data.
             </p>
         </section>
 
@@ -191,9 +191,7 @@ export const privacyPolicyDescription = (
         </section>
 
         <section className="mb-5">
-            <h3 className="font-semibold mb-4">
-                9. Changes to This Policy
-            </h3>
+            <h3 className="font-semibold mb-4">9. Changes to This Policy</h3>
             <p>
                 We may update this Privacy Policy. Revisions will be posted on
                 this page with an updated effective date.

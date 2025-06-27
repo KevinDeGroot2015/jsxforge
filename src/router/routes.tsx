@@ -1,20 +1,22 @@
 import { ApiFetchDescription } from "@constants/routes/functions";
 import { AboutDescription, BasicComponentgeneratorDescription, privacyPolicyDescription } from "@constants/routes/general";
-import { UsecontextCustomizerDescription } from "@constants/routes/hooks";
-import UseContextPageBase from "@pages/hook-generator/useContext/UseContextPageBase";
+import { UsecontextCustomizerDescription } from "@constants/routes/hook-generator";
 import Alert from "@pages/component-generator/Alert";
 import Button from "@pages/component-generator/Button";
 import Card from "@pages/component-generator/Card";
-import FormField from "@pages/component-generator/FormField";
+import InputField from "@pages/component-generator/InputField";
 import Modal from "@pages/component-generator/Modal";
 import ApiFetch from "@pages/functions/ApiFetch";
-import TextArea from "@pages/component-generator/TextArea";
 import CheckBox from "@pages/component-generator/Checkbox";
 import RadioGroup from "@pages/component-generator/RadioGroup";
 import ToggleSwitch from "@pages/component-generator/ToggleSwitch";
 import SelectDropdown from "@pages/component-generator/SelectDropdown";
 import FileUploaders from "@pages/component-generator/FileUploaders";
 import SearchInput from "@pages/component-generator/SearchInput";
+import UseContextPageBase from "@pages/hook-generator/UseContext/UseContextPageBase";
+import UseToggle from "@pages/hook-generator/UseToggle";
+import BlogPage from "@pages/template-generator/BlogPage";
+import { BlogPageDescription } from "@constants/routes/template-generator";
 
 export type RouteItem = {
     path: string;
@@ -57,8 +59,7 @@ export const routes = [
         group: "Component Generator",
         items: [
             { path: "/button", title: "Button", element: <Button /> },
-            { path: "/formfield", title: "Form Field", element: <FormField /> },
-            { path: "/textarea", title: "Text Area", element: <TextArea /> },
+            { path: "/inputfield", title: "Input Field", element: <InputField /> },
             { path: "/checkbox", title: "Checkbox", element: <CheckBox /> },
             { path: "/radiogroup", title: "Radio Group", element: <RadioGroup /> },
             { path: "/toggleswitch", title: "Toggle Switch", element: <ToggleSwitch /> },
@@ -80,15 +81,15 @@ export const routes = [
         group: "Hook Generator",
         items: [
             { path: "/useContext", title: "UseContext Customizer", intro: UsecontextCustomizerDescription, element: <UseContextPageBase /> },
+            { path: "/useToggle", title: "UseToggle (custom)", element: <UseToggle /> },
         ],
     },
-    // {
-    //     group: "Template Library",
-    //     items: [
-    //         { path: "/dashboard", title: "Dashboard" },
-    //         { path: "/login", title: "Login" },
-    //     ],
-    // },
+    {
+        group: "Template Generator",
+        items: [
+            { path: "/blogpage", title: "Blog Page", intro: BlogPageDescription , element: <BlogPage /> },
+        ],
+    },
 ];
 
 export default routes as RouteGroup[];
