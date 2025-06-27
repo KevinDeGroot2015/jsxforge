@@ -29,6 +29,9 @@
       "@layout/*": ["layout/*"],
       "@pages/*": ["pages/*"],
       "@router/*": ["router/*"],
+      "@contexts/*": ["contexts/*"],
+      "@utils/*": ["utils/*"],
+      "@constants/*": ["constants/*"],
     }    
   },
   "include": ["src"]
