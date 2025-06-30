@@ -1,4 +1,4 @@
-export const BasicComponentgeneratorDescription = (
+export const WelcomeDescription = (
     <>
         <section className="py-2">
             <h3 className="font-bold mb-4 text-gray-900">What is JSXForge?</h3>
@@ -19,29 +19,6 @@ export const BasicComponentgeneratorDescription = (
                 <br />I wanted this site to function as my personal portfolio,
                 so I can show my work to others made by and made for React.
             </p>
-        </section>
-        <section className="py-2">
-            <h3 className="font-semibold mb-3 text-gray-800">
-                Why choose JSXForge?
-            </h3>
-            <ul className="list-disc list-inside text-gray-700 space-y-1">
-                <li>Build fast and intuitively</li>
-                <li>Basic coding skills required</li>
-                <li>Export clean, ready-to-use React code</li>
-                <li>Basic every-day placeholder templates for fast usage</li>
-            </ul>
-        </section>
-        <section className="py-2">
-            <h3 className="font-semibold mb-3 text-gray-800">
-                How JSXForge works
-            </h3>
-            <ul className="list-disc list-inside text-gray-700 space-y-1">
-                <li>
-                    Enter the component name and define props (type, default
-                    value).
-                </li>
-                <li>Copy the generated code into your React project.</li>
-            </ul>
         </section>
     </>
 );

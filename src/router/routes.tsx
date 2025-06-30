@@ -1,6 +1,7 @@
 import { ApiFetchDescription } from "@constants/routes/functions";
-import { AboutDescription, BasicComponentgeneratorDescription, privacyPolicyDescription } from "@constants/routes/general";
+import { AboutDescription, WelcomeDescription, privacyPolicyDescription } from "@constants/routes/general";
 import { UsecontextCustomizerDescription } from "@constants/routes/hook-generator";
+import { BlogPageDescription } from "@constants/routes/template-generator";
 import Alert from "@pages/component-generator/Alert";
 import Button from "@pages/component-generator/Button";
 import Card from "@pages/component-generator/Card";
@@ -16,7 +17,7 @@ import SearchInput from "@pages/component-generator/SearchInput";
 import UseContextPageBase from "@pages/hook-generator/UseContext/UseContextPageBase";
 import UseToggle from "@pages/hook-generator/UseToggle";
 import BlogPage from "@pages/template-generator/BlogPage";
-import { BlogPageDescription } from "@constants/routes/template-generator";
+import BasicComponentgenerator from "@components/BasicComponentGenerator/BasicComponentGenerator";
 
 export type RouteItem = {
     path: string;
@@ -33,13 +34,13 @@ export type RouteGroup = {
 
 export const routes = [
     {
-        group: "General",
+        group: "JsxForge",
         items: [
             {
                 path: "/",
                 title: "Welcome to JsxForge",
-                intro: BasicComponentgeneratorDescription,
-                element: <></>,
+                intro: WelcomeDescription,
+                element: <BasicComponentgenerator />,
             },
             {
                 path: "/about",

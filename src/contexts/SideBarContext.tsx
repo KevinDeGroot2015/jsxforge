@@ -22,7 +22,7 @@ export const SideBarContext = createContext<SideBarContextProps>({
 
 export const SideBarProvider = ({ children }: SideBarContextProvideProps) => {
     const [isOpen, setIsOpen] = useState(false);
-    const [openGroups, setOpenGroups] = useState<string[]>(["General"]);
+    const [openGroups, setOpenGroups] = useState<string[]>(["JsxForge"]);
 
     const toggleMenu = () => setIsOpen(!isOpen);
 
